@@ -1,539 +1,792 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TrueAlert Systems — Next-Generation Safety Solutions</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TruAlert Systems — The Smarter PERS Solution</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+    /* ── Design Tokens ─────────────────────────────────── */
     :root {
-      --lime: #C2F040;
-      --lime-dark: #a8d432;
-      --bg: #0A0C0F;
-      --surface: #111418;
-      --surface2: #181C22;
-      --border: rgba(255,255,255,0.08);
-      --text: #F0F2F5;
-      --muted: #8A9099;
+      --navy:      #003D5B;
+      --navy-dark: #002A40;
+      --navy-mid:  #005580;
+      --navy-tint: #EFF6FF;
+      --bg:        #FFFFFF;
+      --bg-alt:    #F8FAFC;
+      --text:      #1E293B;
+      --muted:     #64748B;
+      --border:    #E2E8F0;
+      --white:     #FFFFFF;
+      --radius:    12px;
+      --shadow:    0 1px 3px rgba(0,0,0,.07), 0 4px 16px rgba(0,0,0,.05);
+      --shadow-lg: 0 4px 8px rgba(0,0,0,.08), 0 12px 32px rgba(0,0,0,.08);
     }
 
+    /* ── Reset ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.6; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
 
-    /* NAV */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(10,12,15,0.9); backdrop-filter: blur(12px);
+    /* ── Utilities ──────────────────────────────────────── */
+    .container {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .section { padding: 88px 0; }
+    .section--alt { background: var(--bg-alt); }
+    .section--navy { background: var(--navy); color: var(--white); }
+
+    .label {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--navy-mid);
+      margin-bottom: 12px;
+    }
+    .section--navy .label { color: rgba(255,255,255,.6); }
+
+    h1, h2, h3, h4 { line-height: 1.2; font-weight: 700; color: var(--navy); }
+    .section--navy h1,
+    .section--navy h2,
+    .section--navy h3 { color: var(--white); }
+
+    h1 { font-size: clamp(2rem, 4vw, 3rem); }
+    h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+    h3 { font-size: 1.1rem; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: background .18s, color .18s, border-color .18s, transform .1s;
+      white-space: nowrap;
+    }
+    .btn--primary { background: var(--navy); color: var(--white); border-color: var(--navy); }
+    .btn--primary:hover { background: var(--navy-dark); border-color: var(--navy-dark); }
+    .btn--white { background: var(--white); color: var(--navy); border-color: var(--white); }
+    .btn--white:hover { background: var(--navy-tint); }
+    .btn:active { transform: scale(.98); }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: box-shadow .2s, transform .2s;
+    }
+    .card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+
+    .check-list { display: flex; flex-direction: column; gap: 10px; }
+    .check-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .check-list li svg { flex-shrink: 0; margin-top: 1px; }
+
+    /* ── Navigation ─────────────────────────────────────── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--white);
       border-bottom: 1px solid var(--border);
-      padding: 0 40px;
-      display: flex; align-items: center; justify-content: space-between;
-      height: 64px;
     }
-    .nav-logo {
-      font-size: 20px; font-weight: 800; letter-spacing: -0.5px; color: var(--text);
-      text-decoration: none;
+    .nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
     }
-    .nav-logo span { color: var(--lime); }
-    .nav-links { display: flex; gap: 32px; align-items: center; }
-    .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--text); }
-    .nav-cta {
-      background: var(--lime); color: #0A0C0F; padding: 9px 20px;
-      border-radius: 6px; font-size: 14px; font-weight: 700; text-decoration: none;
-      transition: background 0.2s;
+    .nav__logo img { height: 36px; width: auto; }
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
     }
-    .nav-cta:hover { background: var(--lime-dark); }
+    .nav__links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color .15s;
+    }
+    .nav__links a:hover { color: var(--navy); }
 
-    /* HERO */
-    .hero {
-      min-height: 100vh; display: flex; align-items: center;
-      padding: 120px 40px 80px;
-      position: relative; overflow: hidden;
+    /* ── Hero ───────────────────────────────────────────── */
+    .hero { padding: 80px 0 96px; }
+    .hero__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
     }
-    .hero-bg {
-      position: absolute; inset: 0; z-index: 0;
-      background: radial-gradient(ellipse 80% 60% at 60% 40%, rgba(194,240,64,0.07) 0%, transparent 70%),
-                  radial-gradient(ellipse 40% 50% at 20% 60%, rgba(194,240,64,0.04) 0%, transparent 60%);
+    .hero__eyebrow {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--navy-mid);
+      margin-bottom: 16px;
     }
-    .hero-grid {
-      position: absolute; inset: 0; z-index: 0; opacity: 0.03;
-      background-image: linear-gradient(var(--lime) 1px, transparent 1px),
-                        linear-gradient(90deg, var(--lime) 1px, transparent 1px);
-      background-size: 60px 60px;
+    .hero h1 { margin-bottom: 20px; }
+    .hero__sub {
+      font-size: 17px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 28px;
     }
-    .hero-inner {
-      max-width: 1200px; margin: 0 auto; width: 100%;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
-      position: relative; z-index: 1;
+    .hero__checks { margin-bottom: 36px; }
+    .hero__checks .check-list li { color: var(--text); font-size: 15px; }
+    .hero__visual {
+      border-radius: 20px;
     }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(194,240,64,0.1); border: 1px solid rgba(194,240,64,0.25);
-      color: var(--lime); padding: 6px 14px; border-radius: 100px;
-      font-size: 12px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase;
-      margin-bottom: 24px;
+    .hero__visual img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
-    .hero-badge-dot { width: 6px; height: 6px; background: var(--lime); border-radius: 50%; }
-    .hero h1 {
-      font-size: clamp(40px, 5vw, 64px); font-weight: 900; line-height: 1.05;
-      letter-spacing: -2px; margin-bottom: 24px;
-    }
-    .hero h1 em { font-style: normal; color: var(--lime); }
-    .hero-sub {
-      font-size: 18px; color: var(--muted); line-height: 1.7; margin-bottom: 40px;
-      max-width: 480px;
-    }
-    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
-    .btn-primary {
-      background: var(--lime); color: #0A0C0F; padding: 14px 28px;
-      border-radius: 8px; font-size: 15px; font-weight: 700; text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
-    }
-    .btn-primary:hover { background: var(--lime-dark); transform: translateY(-1px); }
-    .btn-ghost {
-      border: 1px solid var(--border); color: var(--text); padding: 14px 28px;
-      border-radius: 8px; font-size: 15px; font-weight: 500; text-decoration: none;
-      transition: border-color 0.2s, background 0.2s;
-    }
-    .btn-ghost:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.04); }
-    .hero-stats {
-      display: flex; gap: 40px; margin-top: 56px; padding-top: 40px;
-      border-top: 1px solid var(--border);
-    }
-    .stat-val { font-size: 32px; font-weight: 800; color: var(--lime); letter-spacing: -1px; }
-    .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
-
-    /* Hero visual placeholder */
-    .hero-visual {
-      display: flex; align-items: center; justify-content: center;
-    }
-    .hero-device-stack {
-      position: relative; width: 100%; max-width: 420px; aspect-ratio: 1;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .hero-device-ring {
-      position: absolute; border-radius: 50%; border: 1px solid rgba(194,240,64,0.15);
-    }
-    .hero-device-ring:nth-child(1) { width: 100%; height: 100%; }
-    .hero-device-ring:nth-child(2) { width: 72%; height: 72%; border-color: rgba(194,240,64,0.2); }
-    .hero-device-ring:nth-child(3) { width: 44%; height: 44%; border-color: rgba(194,240,64,0.3); }
-    .hero-device-center {
-      width: 120px; height: 120px; background: var(--surface2);
-      border: 2px solid rgba(194,240,64,0.4); border-radius: 24px;
-      display: flex; align-items: center; justify-content: center;
-      position: relative; z-index: 2;
-    }
-    .hero-device-icon { font-size: 48px; }
-
-    /* SECTION BASE */
-    section { padding: 100px 40px; }
-    .section-inner { max-width: 1200px; margin: 0 auto; }
-    .section-label {
-      font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-      color: var(--lime); margin-bottom: 16px;
-    }
-    .section-title {
-      font-size: clamp(28px, 3.5vw, 44px); font-weight: 800; letter-spacing: -1.5px;
-      line-height: 1.1; margin-bottom: 16px;
-    }
-    .section-sub { font-size: 17px; color: var(--muted); max-width: 560px; line-height: 1.7; }
-
-    /* PRODUCTS */
-    .products { background: var(--surface); }
-    .products-header { text-align: center; margin-bottom: 64px; }
-    .products-header .section-sub { margin: 0 auto; }
-    .products-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
-    }
-    .product-card {
-      background: var(--bg); border: 1px solid var(--border); border-radius: 16px;
-      overflow: hidden; text-decoration: none; color: var(--text);
-      transition: border-color 0.2s, transform 0.2s;
-      display: flex; flex-direction: column;
-    }
-    .product-card:hover { border-color: rgba(194,240,64,0.3); transform: translateY(-4px); }
-    .product-card-img {
-      aspect-ratio: 4/3; background: var(--surface2); overflow: hidden;
-      display: flex; align-items: center; justify-content: center;
-      position: relative;
-    }
-    .product-card-img img { width: 100%; height: 100%; object-fit: cover; }
-    .product-card-badge {
-      position: absolute; top: 16px; left: 16px;
-      background: var(--lime); color: #0A0C0F;
-      font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
-      padding: 4px 10px; border-radius: 4px;
-    }
-    .product-card-placeholder {
-      width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
-      font-size: 64px;
-    }
-    .product-card-body { padding: 28px; flex: 1; display: flex; flex-direction: column; }
-    .product-name { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px; }
-    .product-tagline { font-size: 13px; color: var(--lime); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
-    .product-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 20px; flex: 1; }
-    .product-features { display: flex; flex-direction: column; gap: 6px; margin-bottom: 24px; }
-    .product-feature {
-      display: flex; align-items: center; gap: 8px;
-      font-size: 13px; color: var(--muted);
-    }
-    .product-feature::before { content: ''; width: 4px; height: 4px; background: var(--lime); border-radius: 50%; flex-shrink: 0; }
-    .product-link {
-      display: flex; align-items: center; justify-content: space-between;
-      font-size: 14px; font-weight: 600; color: var(--lime);
-    }
-    .product-coming {
-      font-size: 12px; font-weight: 600; color: var(--muted);
-      background: var(--surface2); border: 1px solid var(--border);
-      padding: 5px 12px; border-radius: 20px; align-self: flex-start;
+    .hero__visual-sku {
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.2);
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255,255,255,.7);
     }
 
-    /* WHY SECTION */
-    .why-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
-      margin-top: 64px;
+    /* ── Section Headers ─────────────────────────────────── */
+    .section-header { text-align: center; margin-bottom: 56px; }
+    .section-header p {
+      max-width: 560px;
+      margin: 12px auto 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.65;
     }
-    .why-points { display: flex; flex-direction: column; gap: 32px; }
-    .why-point { display: flex; gap: 20px; }
-    .why-icon {
-      width: 44px; height: 44px; border-radius: 10px;
-      background: rgba(194,240,64,0.1); border: 1px solid rgba(194,240,64,0.2);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px; flex-shrink: 0; margin-top: 2px;
-    }
-    .why-point h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
-    .why-point p { font-size: 14px; color: var(--muted); line-height: 1.6; }
-    .why-visual {
-      background: var(--surface2); border: 1px solid var(--border); border-radius: 20px;
-      padding: 40px; display: flex; flex-direction: column; gap: 20px;
-    }
-    .why-visual-title { font-size: 13px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
-    .why-spec-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
-    .why-spec-row:last-child { border-bottom: none; }
-    .why-spec-label { font-size: 14px; color: var(--muted); }
-    .why-spec-val { font-size: 14px; font-weight: 600; color: var(--text); }
-    .why-spec-val.accent { color: var(--lime); }
 
-    /* USE CASES */
-    .usecases { background: var(--surface); }
-    .usecases-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 56px;
+    /* ── Benefits ──────────────────────────────────────── */
+    .benefits__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
     }
-    .usecase-card {
-      background: var(--bg); border: 1px solid var(--border); border-radius: 14px;
-      padding: 28px 24px;
+    .benefit-card { padding: 32px; }
+    .benefit-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--navy-tint);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      color: var(--navy);
     }
-    .usecase-icon { font-size: 32px; margin-bottom: 16px; }
-    .usecase-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
-    .usecase-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .benefit-card h3 { font-size: 1.05rem; margin-bottom: 10px; }
+    .benefit-card > p {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 20px;
+      line-height: 1.65;
+    }
 
-    /* CTA BANNER */
-    .cta-banner {
-      background: linear-gradient(135deg, rgba(194,240,64,0.08) 0%, rgba(194,240,64,0.03) 100%);
-      border: 1px solid rgba(194,240,64,0.15); border-radius: 20px;
-      padding: 60px; text-align: center;
-      margin: 0 40px 100px;
+    /* ── Products ──────────────────────────────────────── */
+    .products__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
     }
-    .cta-banner h2 { font-size: 36px; font-weight: 800; letter-spacing: -1px; margin-bottom: 16px; }
-    .cta-banner p { font-size: 17px; color: var(--muted); margin-bottom: 36px; }
-    .cta-email { font-size: 16px; color: var(--lime); font-weight: 600; margin-top: 20px; }
-
-    /* FOOTER */
-    footer {
-      border-top: 1px solid var(--border); padding: 40px;
-      display: flex; align-items: center; justify-content: space-between;
+    .product-card { overflow: hidden; }
+    .product-card__img {
+      background: var(--navy);
+      aspect-ratio: 4/3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
     }
-    .footer-logo { font-size: 16px; font-weight: 800; }
-    .footer-logo span { color: var(--lime); }
-    .footer-copy { font-size: 13px; color: var(--muted); }
-    .footer-links { display: flex; gap: 24px; }
-    .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; }
-    .footer-links a:hover { color: var(--text); }
+    .product-card__img-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.4);
+    }
+    .product-card__img-name {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--white);
+    }
+    .product-card__body { padding: 24px; }
+    .product-card__price {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--navy-mid);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .product-card__tagline {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+    .product-card__desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .product-card__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+    .product-card__tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 20px;
+      background: var(--bg-alt);
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+    .product-card__cta {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--navy-mid);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: gap .15s, color .15s;
+    }
+    .product-card__cta:hover { gap: 8px; color: var(--navy); }
+    .coming-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      background: var(--navy-tint);
+      color: var(--navy-mid);
+      margin-bottom: 8px;
+    }
 
+    /* ── ResQHub ─────────────────────────────────────────── */
+    .resqhub__intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+      margin-bottom: 72px;
+    }
+    .resqhub__intro-copy h2 { margin-bottom: 16px; }
+    .resqhub__intro-copy p { font-size: 16px; color: var(--muted); line-height: 1.7; }
+    .resqhub__mock {
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 16/10;
+      box-shadow: var(--shadow-lg);
+    }
+    .resqhub__mock img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .resqhub__subhead { text-align: center; margin-bottom: 40px; }
+    .resqhub__subhead h3 { font-size: 1.35rem; margin-bottom: 8px; }
+    .resqhub__subhead p { font-size: 15px; color: var(--muted); }
+    .resqhub__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .rq-card {
+      display: flex;
+      gap: 18px;
+      padding: 28px;
+    }
+    .rq-icon {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--navy-tint);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--navy);
+    }
+    .rq-card h4 { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .rq-card .capability { font-size: 13px; color: var(--text); margin-bottom: 4px; }
+    .rq-card .benefit { font-size: 13px; color: var(--muted); }
+
+    /* ── Partnership ─────────────────────────────────────── */
+    .partnership { padding: 88px 0; }
+    .partnership__inner { max-width: 720px; margin: 0 auto; text-align: center; }
+    .partnership__inner h2 { margin-bottom: 16px; }
+    .partnership__desc {
+      font-size: 17px;
+      color: rgba(255,255,255,.8);
+      line-height: 1.7;
+      margin-bottom: 44px;
+    }
+    .partnership__points {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin-bottom: 44px;
+    }
+    .p-point {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      max-width: 160px;
+    }
+    .p-point-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .p-point span { font-size: 13px; font-weight: 500; color: rgba(255,255,255,.8); text-align: center; line-height: 1.5; }
+
+    /* ── Get A Quote ─────────────────────────────────────── */
+    .quote__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+    .quote__copy h2 { margin-bottom: 16px; }
+    .quote__copy p { color: var(--muted); font-size: 16px; line-height: 1.7; }
+    .quote__card { padding: 40px; text-align: center; }
+    .quote__card-eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    .quote__card-email { font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .quote__card-note { font-size: 13px; color: var(--muted); margin-bottom: 32px; }
+
+    /* ── Footer ─────────────────────────────────────────── */
+    .footer { background: var(--navy); padding: 48px 0 32px; }
+    .footer__top {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 48px;
+      align-items: center;
+      padding-bottom: 32px;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+    .footer__logo img { height: 32px; }
+    .footer__links {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .footer__links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(255,255,255,.6);
+      transition: color .15s;
+    }
+    .footer__links a:hover { color: var(--white); }
+    .footer__copy {
+      padding-top: 24px;
+      text-align: center;
+      font-size: 13px;
+      color: rgba(255,255,255,.35);
+    }
+
+    /* ── Responsive ─────────────────────────────────────── */
     @media (max-width: 900px) {
-      nav { padding: 0 20px; }
-      .nav-links { display: none; }
-      .hero { padding: 100px 20px 60px; }
-      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
-      .hero-visual { display: none; }
-      section { padding: 60px 20px; }
-      .products-grid { grid-template-columns: 1fr; }
-      .why-grid { grid-template-columns: 1fr; gap: 40px; }
-      .usecases-grid { grid-template-columns: 1fr 1fr; }
-      .cta-banner { margin: 0 20px 60px; padding: 40px 24px; }
-      footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 20px; }
+      .hero__inner, .resqhub__intro, .quote__inner { grid-template-columns: 1fr; gap: 40px; }
+      .hero__visual, .resqhub__mock { display: none; }
+      .benefits__grid, .resqhub__grid { grid-template-columns: 1fr; }
+      .footer__top { grid-template-columns: 1fr; text-align: center; gap: 24px; }
+    }
+    @media (max-width: 680px) {
+      .products__grid { grid-template-columns: 1fr; }
+      .nav__links { display: none; }
+      .section { padding: 60px 0; }
+      .partnership__points { gap: 24px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <a class="nav-logo" href="index.html">True<span>Alert</span></a>
-    <div class="nav-links">
-      <a href="#products">Products</a>
-      <a href="#why">Why TrueAlert</a>
-      <a href="#use-cases">Use Cases</a>
-      <a href="mailto:success@truealertsystems.com">Contact</a>
+<!-- ── Nav ───────────────────────────────────────────── -->
+<nav class="nav">
+  <div class="container">
+    <div class="nav__inner">
+      <a href="#" class="nav__logo">
+        <img src="assets/logo-vector.png" alt="TruAlert Systems">
+      </a>
+      <div class="nav__links">
+        <a href="#pers-devices">PERS Devices</a>
+        <a href="#management-platform">Management Platform</a>
+        <a href="#partnership-options">Partnership Options</a>
+      </div>
+      <a href="#get-a-quote" class="btn btn--primary">Get A Quote</a>
     </div>
-    <a class="nav-cta" href="mailto:success@truealertsystems.com">Request Demo</a>
-  </nav>
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-grid"></div>
-    <div class="hero-inner">
-      <div class="hero-content">
-        <div class="hero-badge">
-          <span class="hero-badge-dot"></span>
-          4G GPS Emergency Response
-        </div>
-        <h1>Safety Tech<br>Built for <em>Real Life</em></h1>
-        <p class="hero-sub">
-          Enterprise-grade personal safety devices combining SOS emergency response,
-          fall detection, 2-way voice, and real-time GPS tracking — worn as a smartwatch
-          or discreet pendant.
-        </p>
-        <div class="hero-actions">
-          <a class="btn-primary" href="#products">View Products</a>
-          <a class="btn-ghost" href="mailto:success@truealertsystems.com">Request a Demo Kit</a>
-        </div>
-        <div class="hero-stats">
-          <div>
-            <div class="stat-val">4G</div>
-            <div class="stat-label">LTE Connected</div>
-          </div>
-          <div>
-            <div class="stat-val">48+</div>
-            <div class="stat-label">Hour Battery</div>
-          </div>
-          <div>
-            <div class="stat-val">2-in-1</div>
-            <div class="stat-label">Wear Options</div>
-          </div>
-          <div>
-            <div class="stat-val">IP67</div>
-            <div class="stat-label">Dust & Water Resistant</div>
-          </div>
-        </div>
-      </div>
-      <div class="hero-visual">
-        <div class="hero-device-stack">
-          <div class="hero-device-ring"></div>
-          <div class="hero-device-ring"></div>
-          <div class="hero-device-ring"></div>
-          <div class="hero-device-center">
-            <span class="hero-device-icon">⌚</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PRODUCTS -->
-  <section class="products" id="products">
-    <div class="section-inner">
-      <div class="products-header">
-        <div class="section-label">Product Line</div>
-        <h2 class="section-title">Next-Generation Safety Devices</h2>
-        <p class="section-sub">Purpose-built hardware for seniors, lone workers, and high-risk environments — deployable across care facilities, enterprises, and consumer channels.</p>
-      </div>
-      <div class="products-grid">
-
-        <!-- SW 200i -->
-        <a class="product-card" href="products/200i.html">
-          <div class="product-card-img">
-            <img src="https://truealertsystems.com/wp-content/uploads/2025/09/slide1-TA-200i.jpg" alt="TrueAlert SW 200i" onerror="this.style.display='none'; this.parentElement.querySelector('.product-card-placeholder').style.display='flex';" />
-            <div class="product-card-placeholder" style="display:none;">⌚</div>
-            <div class="product-card-badge">Available Now</div>
-          </div>
-          <div class="product-card-body">
-            <div class="product-tagline">Smartwatch + Pendant</div>
-            <div class="product-name">SW 200i</div>
-            <p class="product-desc">2-in-1 wearable safety device. Wear as a smartwatch or discreet lanyard pendant. Full 4G connectivity with fall detection and 2-way voice.</p>
-            <div class="product-features">
-              <span class="product-feature">SOS Alarm + Fall Detection</span>
-              <span class="product-feature">2-Way Voice Communication</span>
-              <span class="product-feature">Heart Rate, SpO2, Temp, BP</span>
-              <span class="product-feature">4G GPS + DIP67</span>
-            </div>
-            <div class="product-link">
-              View Full Specs <span>→</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- 300v -->
-        <a class="product-card" href="products/300v.html">
-          <div class="product-card-img">
-            <div class="product-card-placeholder">📡</div>
-            <div class="product-card-badge" style="background: var(--surface2); color: var(--muted); border: 1px solid var(--border);">Coming Soon</div>
-          </div>
-          <div class="product-card-body">
-            <div class="product-tagline">Advanced GPS Tracker</div>
-            <div class="product-name">300v</div>
-            <p class="product-desc">Next-generation vehicle and asset tracking with enhanced GPS precision and extended battery life for fleet and enterprise deployments.</p>
-            <div class="product-features">
-              <span class="product-feature">Precision GPS Tracking</span>
-              <span class="product-feature">Extended Battery</span>
-              <span class="product-feature">Fleet Management Ready</span>
-            </div>
-            <span class="product-coming">Specs Coming Soon</span>
-          </div>
-        </a>
-
-        <!-- 300i3 -->
-        <a class="product-card" href="products/300i3.html">
-          <div class="product-card-img">
-            <div class="product-card-placeholder">🛡️</div>
-            <div class="product-card-badge" style="background: var(--surface2); color: var(--muted); border: 1px solid var(--border);">Coming Soon</div>
-          </div>
-          <div class="product-card-body">
-            <div class="product-tagline">Industrial Safety Device</div>
-            <div class="product-name">300i3</div>
-            <p class="product-desc">Industrial-grade personal safety monitor designed for high-risk environments. Ruggedized build with advanced sensor array for lone worker protection.</p>
-            <div class="product-features">
-              <span class="product-feature">Industrial Grade Durability</span>
-              <span class="product-feature">Advanced Sensor Array</span>
-              <span class="product-feature">Lone Worker Protection</span>
-            </div>
-            <span class="product-coming">Specs Coming Soon</span>
-          </div>
-        </a>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- WHY TRUEALERT -->
-  <section id="why">
-    <div class="section-inner">
-      <div class="section-label">Why TrueAlert</div>
-      <h2 class="section-title">Enterprise Safety<br>Without the Compromise</h2>
-      <div class="why-grid">
-        <div class="why-points">
-          <div class="why-point">
-            <div class="why-icon">📶</div>
-            <div>
-              <h3>4G-First with Fallback</h3>
-              <p>Primary 4G FDD-LTE with automatic 3G WCDMA and 2G GSM fallback ensures coverage wherever your users are — no dead zones.</p>
-            </div>
-          </div>
-          <div class="why-point">
-            <div class="why-icon">🔋</div>
-            <div>
-              <h3>48+ Hour Battery</h3>
-              <p>600mAh battery delivers over 48 hours of real-world use. Magnetic 2-pin charging for effortless daily top-ups.</p>
-            </div>
-          </div>
-          <div class="why-point">
-            <div class="why-icon">❤️</div>
-            <div>
-              <h3>Full Health Monitoring</h3>
-              <p>Continuous heart rate, blood pressure, pulse ox, body temperature, and step counting built into a device that weighs just 50g.</p>
-            </div>
-          </div>
-          <div class="why-point">
-            <div class="why-icon">🔒</div>
-            <div>
-              <h3>Discreet & Wearable</h3>
-              <p>Seamlessly converts between smartwatch and lanyard pendant. Users actually wear it — because it doesn't look like a medical device.</p>
-            </div>
-          </div>
-        </div>
-        <div class="why-visual">
-          <div class="why-visual-title">SW 200i — At a Glance</div>
-          <div class="why-spec-row">
-            <span class="why-spec-label">Chipset</span>
-            <span class="why-spec-val">ASR3603S</span>
-          </div>
-          <div class="why-spec-row">
-            <span class="why-spec-label">Display</span>
-            <span class="why-spec-val">1.83" IPS, 240×283</span>
-          </div>
-          <div class="why-spec-row">
-            <span class="why-spec-label">Battery</span>
-            <span class="why-spec-val accent">600mAh / 48+ hrs</span>
-          </div>
-          <div class="why-spec-row">
-            <span class="why-spec-label">Dimensions</span>
-            <span class="why-spec-val">49.7 × 41 × 14.7mm</span>
-          </div>
-          <div class="why-spec-row">
-            <span class="why-spec-label">Weight</span>
-            <span class="why-spec-val">50.60g</span>
-          </div>
-          <div class="why-spec-row">
-            <span class="why-spec-label">Network</span>
-            <span class="why-spec-val accent">4G / 3G / 2G</span>
-          </div>
-          <div class="why-spec-row">
-            <span class="why-spec-label">Durability</span>
-            <span class="why-spec-val">DIP67</span>
-          </div>
-          <div class="why-spec-row">
-            <span class="why-spec-label">SIM</span>
-            <span class="why-spec-val">Nano SIM</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- USE CASES -->
-  <section class="usecases" id="use-cases">
-    <div class="section-inner">
-      <div class="section-label">Use Cases</div>
-      <h2 class="section-title">Built for High-Stakes Environments</h2>
-      <div class="usecases-grid">
-        <div class="usecase-card">
-          <div class="usecase-icon">🏥</div>
-          <div class="usecase-title">Senior Care Facilities</div>
-          <p class="usecase-desc">Fall detection and SOS response for aged care, retirement communities, and assisted living environments.</p>
-        </div>
-        <div class="usecase-card">
-          <div class="usecase-icon">🏗️</div>
-          <div class="usecase-title">Lone Workers</div>
-          <p class="usecase-desc">Real-time GPS and emergency response for workers in remote locations, construction sites, and field operations.</p>
-        </div>
-        <div class="usecase-card">
-          <div class="usecase-icon">🏢</div>
-          <div class="usecase-title">Corporate Safety</div>
-          <p class="usecase-desc">Scalable employee safety solutions for enterprises with duty-of-care obligations across distributed workforces.</p>
-        </div>
-        <div class="usecase-card">
-          <div class="usecase-icon">👨‍👩‍👧</div>
-          <div class="usecase-title">Family Peace of Mind</div>
-          <p class="usecase-desc">Keep family members connected and protected with discreet wearables that don't stigmatize or compromise independence.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA BANNER -->
-  <div class="cta-banner">
-    <h2>Ready to Deploy TrueAlert?</h2>
-    <p>Request a demo kit and see the SW 200i in action. Our team will configure it for your specific deployment environment.</p>
-    <a class="btn-primary" href="mailto:success@truealertsystems.com">Request a Demo Kit →</a>
-    <div class="cta-email">success@truealertsystems.com</div>
   </div>
+</nav>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-logo">True<span>Alert</span> Systems</div>
-    <div class="footer-copy">© 2025 TrueAlert Systems. All rights reserved.</div>
-    <div class="footer-links">
-      <a href="products/200i.html">SW 200i</a>
-      <a href="products/300v.html">300v</a>
-      <a href="products/300i3.html">300i3</a>
-      <a href="mailto:success@truealertsystems.com">Contact</a>
+<!-- ── Hero ─────────────────────────────────────────── -->
+<section class="hero">
+  <div class="container">
+    <div class="hero__inner">
+      <div>
+        <p class="hero__eyebrow">For PERS &amp; Life-Safety Dealers</p>
+        <h1>The Smarter PERS Solution: Higher Margins, Simpler Management, Full Control.</h1>
+        <p class="hero__sub">Partner with TruAlert for competitively priced tech, a game-changing remote portal, and the SIM freedom you need to grow your PERS business profitably and efficiently.</p>
+        <ul class="hero__checks check-list">
+          <li>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#EFF6FF"/><path d="M5 9l3 3 5-5" stroke="#003D5B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Increase margins with competitively priced advanced hardware
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#EFF6FF"/><path d="M5 9l3 3 5-5" stroke="#003D5B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Own your accounts with complete SIM &amp; monitoring freedom
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#EFF6FF"/><path d="M5 9l3 3 5-5" stroke="#003D5B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Slash support costs with a powerful remote management portal
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#EFF6FF"/><path d="M5 9l3 3 5-5" stroke="#003D5B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Reduce device issues with a stable &amp; reliable RTOS platform
+          </li>
+        </ul>
+        <a href="#get-a-quote" class="btn btn--primary">Get A Quote</a>
+      </div>
+      <div class="hero__visual">
+        <img src="assets/TA-Hero-image-660-updated-v2.png" alt="TruAlert SW Series Smartwatch PERS">
+      </div>
     </div>
-  </footer>
+  </div>
+</section>
+
+<!-- ── Benefits ──────────────────────────────────────── -->
+<section id="pers-devices" class="section section--alt">
+  <div class="container">
+    <div class="section-header">
+      <span class="label">Core Advantages</span>
+      <h2>Better Tech + Total Control = Higher Profits</h2>
+      <p>Discover the core advantages of the TruAlert system, designed to slash operational costs, simplify management, and maximize your margins.</p>
+    </div>
+    <div class="benefits__grid">
+
+      <div class="card benefit-card">
+        <div class="benefit-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <h3>Maximize Your Margins</h3>
+        <p>Our dealer-first approach boosts your bottom line. Offer competitively priced base models and leverage our diverse portfolio to create clear upsell paths to higher-margin, premium devices.</p>
+        <ul class="check-list">
+          <li><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#EFF6FF"/><path d="M5 9l3 3 5-5" stroke="#003D5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Competitively priced entry-level hardware</li>
+          <li><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#EFF6FF"/><path d="M5 9l3 3 5-5" stroke="#003D5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Reduced support costs thanks to a reliable platform</li>
+          <li><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#EFF6FF"/><path d="M5 9l3 3 5-5" stroke="#003D5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Higher customer retention by offering the perfect watch for each user</li>
+        </ul>
+      </div>
+
+      <div class="card benefit-card">
+        <div class="benefit-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        </div>
+        <h3>Total Control (SIM &amp; Monitoring Freedom)</h3>
+        <p>Get complete freedom over your connectivity and monitoring partners. Eliminate supplier lock-in and build the operational stack that works best for your business.</p>
+        <ul class="check-list">
+          <li><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#EFF6FF"/><path d="M5 9l3 3 5-5" stroke="#003D5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Complete flexibility with carrier selection</li>
+          <li><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#EFF6FF"/><path d="M5 9l3 3 5-5" stroke="#003D5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Full choice of monitoring centers</li>
+          <li><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#EFF6FF"/><path d="M5 9l3 3 5-5" stroke="#003D5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>True ownership of your customer base</li>
+        </ul>
+      </div>
+
+      <div class="card benefit-card">
+        <div class="benefit-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        </div>
+        <h3>Effortless Operations via Advanced Portal</h3>
+        <p>Drastically reduce support time and gain proactive control over your entire fleet. Remotely tune fall detection (exclusive!), locate and reboot devices, run diagnostics, manage sub-dealers, and see issues before they impact customers.</p>
+        <ul class="check-list">
+          <li><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#EFF6FF"/><path d="M5 9l3 3 5-5" stroke="#003D5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Customize caregiver alerts (SMS/Email) for key events like SOS, fall, or low battery</li>
+          <li><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#EFF6FF"/><path d="M5 9l3 3 5-5" stroke="#003D5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Comprehensive remote diagnostic and device management tools</li>
+          <li><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#EFF6FF"/><path d="M5 9l3 3 5-5" stroke="#003D5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Proactive issue detection and resolution capabilities</li>
+        </ul>
+      </div>
+
+      <div class="card benefit-card">
+        <div class="benefit-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
+        </div>
+        <h3>Superior, Purpose-Built Tech</h3>
+        <p>Offer a portfolio of reliable smartwatches designed to meet any customer need—from rugged workhorses to slim, feature-rich premium models. All are built on a trusted RTOS platform for dependable performance.</p>
+        <ul class="check-list">
+          <li><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#EFF6FF"/><path d="M5 9l3 3 5-5" stroke="#003D5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>A diverse portfolio to match specific customer needs (value, comfort, features, connectivity)</li>
+          <li><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#EFF6FF"/><path d="M5 9l3 3 5-5" stroke="#003D5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Modern, attractive designs that drive end-user adoption and satisfaction</li>
+          <li><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#EFF6FF"/><path d="M5 9l3 3 5-5" stroke="#003D5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Stable RTOS platform across all models for consistent, reliable performance</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Products ──────────────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="label">Device Portfolio</span>
+      <h2>The Right Tech for Every Customer</h2>
+      <p>From value-focused workhorses to premium, discreet designs, our lineup helps you win more deals and increase end-user satisfaction.</p>
+    </div>
+    <div class="products__grid">
+
+      <div class="card product-card">
+        <div class="product-card__img">
+          <span class="product-card__img-eyebrow">SW Series</span>
+          <span class="product-card__img-name">200i</span>
+        </div>
+        <div class="product-card__body">
+          <p class="product-card__tagline">SW Series 200i</p>
+          <p class="product-card__desc">The 200i offers streamlined performance in a compact form. Ideal for users wanting a minimalist look without sacrificing functionality, it features a crisp 1.83" IPS display, noise-cancelling mic, and wide LTE coverage in a lightweight, water-resistant housing.</p>
+          <div class="product-card__tags">
+            <span class="product-card__tag">SOS Alarm</span>
+            <span class="product-card__tag">Fall Detection</span>
+            <span class="product-card__tag">GPS</span>
+            <span class="product-card__tag">2-Way Voice</span>
+            <span class="product-card__tag">Heart Rate</span>
+            <span class="product-card__tag">Step Counter</span>
+          </div>
+          <a href="products/200i.html" class="product-card__cta">View Full Specs →</a>
+        </div>
+      </div>
+
+      <div class="card product-card">
+        <div class="product-card__img">
+          <span class="product-card__img-eyebrow">SW Series</span>
+          <span class="product-card__img-name">200v</span>
+        </div>
+        <div class="product-card__body">
+          <p class="product-card__tagline">SW Series 200v</p>
+          <p class="product-card__desc">The 200v adds camera and temperature tracking to the TruAlert line — perfect for premium users who want it all. With dynamic HR sensors, broad network coverage, and up to five color choices, it's stylish and powerful. IP67 rated with magnetic charging.</p>
+          <div class="product-card__tags">
+            <span class="product-card__tag">SOS Alarm</span>
+            <span class="product-card__tag">Fall Detection</span>
+            <span class="product-card__tag">GPS</span>
+            <span class="product-card__tag">2-Way Voice</span>
+            <span class="product-card__tag">Heart Rate</span>
+            <span class="product-card__tag">Camera</span>
+            <span class="product-card__tag">Temp Tracking</span>
+          </div>
+          <a href="products/200v.html" class="product-card__cta">View Full Specs →</a>
+        </div>
+      </div>
+
+      <div class="card product-card">
+        <div class="product-card__img" style="background: var(--navy-mid);">
+          <span class="product-card__img-eyebrow">SW Series</span>
+          <span class="product-card__img-name">300v</span>
+        </div>
+        <div class="product-card__body">
+          <p class="product-card__tagline">SW Series 300v</p>
+          <p class="product-card__desc">The next evolution in PERS smartwatch technology. The 300v brings premium design and advanced sensors to the TruAlert lineup — fully ResQHub integrated from day one.</p>
+          <div class="product-card__tags">
+            <span class="product-card__tag">SOS Alarm</span>
+            <span class="product-card__tag">Fall Detection</span>
+            <span class="product-card__tag">GPS</span>
+            <span class="product-card__tag">2-Way Voice</span>
+            <span class="product-card__tag">Heart Rate</span>
+          </div>
+          <a href="products/300v.html" class="product-card__cta">Learn More →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── ResQHub ────────────────────────────────────────── -->
+<section id="management-platform" class="section section--alt">
+  <div class="container">
+    <div class="resqhub__intro">
+      <div class="resqhub__intro-copy">
+        <span class="label">Management Platform</span>
+        <h2>Introducing ResQHub™: Your Complete PERS Management Platform</h2>
+        <p>Go beyond basic dashboards. ResQHub™ gives you deep visibility and powerful remote control to manage all your devices and subscribers proactively, saving time and slashing operational costs.</p>
+      </div>
+      <div class="resqhub__mock">
+        <img src="assets/Dealer-Dashboard-Overview-1024x712.png" alt="ResQHub Device Management Dashboard">
+      </div>
+    </div>
+
+    <div class="resqhub__subhead">
+      <h3>Unrivaled Remote Control &amp; Diagnostics</h3>
+      <p>Take control like never before, directly from ResQHub. Slash support time and eliminate unnecessary site visits.</p>
+    </div>
+
+    <div class="resqhub__grid">
+
+      <div class="card rq-card">
+        <div class="rq-icon">
+          <img src="assets/icons/remote-fall-detection-tuning.svg" width="22" height="22" alt="Remote Fall Detection Tuning">
+        </div>
+        <div>
+          <h4>Remote Fall Detection Tuning</h4>
+          <p class="capability">Adjust sensitivity levels per user remotely</p>
+          <p class="benefit">Optimize performance and reduce false alarms without costly site visits</p>
+        </div>
+      </div>
+
+      <div class="card rq-card">
+        <div class="rq-icon">
+          <img src="assets/icons/remote-device-actions.svg" width="22" height="22" alt="Remote Device Actions">
+        </div>
+        <div>
+          <h4>Remote Device Actions</h4>
+          <p class="capability">Locate, reboot, or power off devices, and trigger audible alerts to find them</p>
+          <p class="benefit">Troubleshoot remotely, assist users faster, and locate devices with ease</p>
+        </div>
+      </div>
+
+      <div class="card rq-card">
+        <div class="rq-icon">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </div>
+        <div>
+          <h4>Remote Configuration</h4>
+          <p class="capability">Manage Do Not Disturb settings and update contact lists on the fly</p>
+          <p class="benefit">Customize the user experience instantly without touching the device</p>
+        </div>
+      </div>
+
+      <div class="card rq-card">
+        <div class="rq-icon">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        </div>
+        <div>
+          <h4>Device Diagnostics</h4>
+          <p class="capability">View real-time connection status, battery levels, and device health</p>
+          <p class="benefit">Detect and resolve issues before they impact your subscribers</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Partnership Options ───────────────────────────── -->
+<section id="partnership-options" class="section section--navy partnership">
+  <div class="container">
+    <div class="partnership__inner">
+      <span class="label">Become a Dealer</span>
+      <h2>Partnership Options</h2>
+      <p class="partnership__desc">Become a TruAlert dealer and add a proven PERS smartwatch line to your portfolio. We handle the hardware, platform, and SIM infrastructure — you own the customer relationship and all monitoring RMR.</p>
+      <div class="partnership__points">
+        <div class="p-point">
+          <div class="p-point-icon">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <span>No SIM or monitoring lock-in — full freedom to choose your stack</span>
+        </div>
+        <div class="p-point">
+          <div class="p-point-icon">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <span>You own every customer relationship and all monitoring RMR</span>
+        </div>
+        <div class="p-point">
+          <div class="p-point-icon">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <span>ResQHub platform included — manage your full fleet from day one</span>
+        </div>
+      </div>
+      <a href="#get-a-quote" class="btn btn--white">Get A Quote</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Get A Quote ───────────────────────────────────── -->
+<section id="get-a-quote" class="section">
+  <div class="container">
+    <div class="quote__inner">
+      <div class="quote__copy">
+        <span class="label">Contact Us</span>
+        <h2>Ready to Launch Your PERS Business?</h2>
+        <p>Get in touch and a TruAlert partner specialist will reach out within one business day. Whether you're ready to order or just exploring, we're here to help you build a more profitable PERS operation.</p>
+      </div>
+      <div class="card quote__card">
+        <p class="quote__card-eyebrow">Reach Us Directly</p>
+        <p class="quote__card-email">success@truealertsystems.com</p>
+        <p class="quote__card-note">Response within one business day</p>
+        <a href="mailto:success@truealertsystems.com" class="btn btn--primary" style="width:100%;">Send Us A Message</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__logo">
+        <img src="assets/logo-white.png" alt="TruAlert Systems">
+      </div>
+      <nav class="footer__links">
+        <a href="#pers-devices">PERS Devices</a>
+        <a href="#management-platform">Management Platform</a>
+        <a href="#partnership-options">Partnership Options</a>
+        <a href="#get-a-quote">Get A Quote</a>
+      </nav>
+      <div></div>
+    </div>
+    <p class="footer__copy">© 2025 TruAlert Systems. All rights reserved.</p>
+  </div>
+</footer>
 
 </body>
 </html>
