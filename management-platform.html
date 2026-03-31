@@ -108,6 +108,7 @@
       z-index: 200;
     }
     .nav__dropdown:hover .nav__dropdown-menu { opacity: 1; pointer-events: auto; }
+    .nav__dropdown-menu::before { content: ""; position: absolute; top: -10px; left: 0; right: 0; height: 10px; }
     .nav__dropdown-menu a {
       display: block;
       padding: 8px 12px;
@@ -254,22 +255,22 @@
 <header class="nav">
   <div class="container">
     <div class="nav__inner">
-      <a href="../index.html" class="nav__logo">
-        <img src="assets/TruAlert-Logo-Vector-crop2.png" alt="TruAlert Systems">
+      <a href="/" class="nav__logo">
+        <img src="assets/logo-vector.png" alt="TruAlert Systems">
       </a>
       <nav class="nav__links">
         <div class="nav__dropdown">
-          <a href="index.html#pers-devices">PERS Devices <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0"><path d="M6 9l6 6 6-6"/></svg></a>
+          <a href="/#pers-devices">PERS Devices <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0"><path d="M6 9l6 6 6-6"/></svg></a>
           <div class="nav__dropdown-menu">
-            <a href="products/200i.html">SW Series 200i</a>
-            <a href="products/300v.html">SW Series 300v</a>
-            <a href="products/300i3.html">SW Series 300i3</a>
+            <a href="/products/200i">SW Series 200i</a>
+            <a href="/products/300v">SW Series 300v</a>
+            <a href="/products/300i3">SW Series 300i3</a>
           </div>
         </div>
-        <a href="management-platform.html" class="active">Management Platform</a>
-        <a href="index.html#partnership-options">Partnership Options</a>
+        <a href="/management-platform" class="active">Management Platform</a>
+        <a href="/#partnership-options">Partnership Options</a>
       </nav>
-      <a href="index.html#get-a-quote" class="btn btn--primary">Get A Quote</a>
+      <a href="/#get-a-quote" class="btn btn--primary">Get A Quote</a>
     </div>
   </div>
 </header>
@@ -278,7 +279,7 @@
 <div class="breadcrumb">
   <div class="container">
     <div class="breadcrumb__inner">
-      <a href="index.html">Home</a>
+      <a href="/">Home</a>
       <span class="breadcrumb__sep">›</span>
       <span class="breadcrumb__current">Management Platform</span>
     </div>
@@ -293,7 +294,7 @@
         <span class="label" style="color:rgba(255,255,255,.55);">ResQHub™</span>
         <h1>One Platform.<br>Total Control.</h1>
         <p>ResQHub™ is the device management and operations platform built specifically for PERS dealers. Monitor your entire fleet in real time, manage subscribers, configure devices remotely, and run a tighter operation — all from a single interface.</p>
-        <a href="index.html#get-a-quote" class="btn btn--white">Get A Quote</a>
+        <a href="/#get-a-quote" class="btn btn--white">Get A Quote</a>
       </div>
       <div class="platform-hero__img">
         <img src="assets/Dealer-Dashboard-Overview-1024x712.png" alt="ResQHub Device Management Dashboard">
@@ -570,7 +571,7 @@
         <h2>Ready to See ResQHub™ in Action?</h2>
         <p>Get in touch and a TruAlert specialist will walk you through the platform and help you find the right model for your business.</p>
       </div>
-      <a href="index.html#get-a-quote" class="btn btn--white">Get A Quote</a>
+      <a href="/#get-a-quote" class="btn btn--white">Get A Quote</a>
     </div>
   </div>
 </section>
@@ -583,12 +584,12 @@
         <img src="assets/logo-white.png" alt="TruAlert Systems">
       </div>
       <nav class="footer__links">
-        <a href="index.html#pers-devices">PERS Devices</a>
-        <a href="management-platform.html">Management Platform</a>
-        <a href="index.html#partnership-options">Partnership Options</a>
-        <a href="index.html#get-a-quote">Get A Quote</a>
-        <a href="privacy-policy.html">Privacy Policy</a>
-        <a href="terms-and-conditions.html">Terms &amp; Conditions</a>
+        <a href="/#pers-devices">PERS Devices</a>
+        <a href="/management-platform">Management Platform</a>
+        <a href="/#partnership-options">Partnership Options</a>
+        <a href="/#get-a-quote">Get A Quote</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/terms-and-conditions">Terms &amp; Conditions</a>
       </nav>
     </div>
     <p class="footer__copy">© 2025 TruAlert Systems. All rights reserved.</p>

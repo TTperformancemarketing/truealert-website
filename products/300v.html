@@ -73,6 +73,7 @@
       z-index: 200;
     }
     .nav__dropdown:hover .nav__dropdown-menu { opacity: 1; pointer-events: auto; }
+    .nav__dropdown-menu::before { content: ""; position: absolute; top: -10px; left: 0; right: 0; height: 10px; }
     .nav__dropdown-menu a {
       display: block;
       padding: 8px 12px;
@@ -217,22 +218,22 @@
 <nav class="nav">
   <div class="container">
     <div class="nav__inner">
-      <a href="../index.html" class="nav__logo">
+      <a href="/" class="nav__logo">
         <img src="../assets/logo-vector.png" alt="TruAlert Systems">
       </a>
       <div class="nav__links">
         <div class="nav__dropdown">
-          <a href="../index.html#pers-devices">PERS Devices <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0"><path d="M6 9l6 6 6-6"/></svg></a>
+          <a href="/#pers-devices">PERS Devices <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0"><path d="M6 9l6 6 6-6"/></svg></a>
           <div class="nav__dropdown-menu">
-            <a href="200i.html">SW Series 200i</a>
-            <a href="300v.html">SW Series 300v</a>
-            <a href="300i3.html">SW Series 300i3</a>
+            <a href="/products/200i">SW Series 200i</a>
+            <a href="/products/300v">SW Series 300v</a>
+            <a href="/products/300i3">SW Series 300i3</a>
           </div>
         </div>
-        <a href="../index.html#management-platform">Management Platform</a>
-        <a href="../index.html#partnership-options">Partnership Options</a>
+        <a href="/management-platform">Management Platform</a>
+        <a href="/#partnership-options">Partnership Options</a>
       </div>
-      <a href="../index.html#get-a-quote" class="btn btn--primary">Get A Quote</a>
+      <a href="/#get-a-quote" class="btn btn--primary">Get A Quote</a>
     </div>
   </div>
 </nav>
@@ -241,9 +242,9 @@
 <div class="breadcrumb">
   <div class="container">
     <div class="breadcrumb__inner">
-      <a href="../index.html">Home</a>
+      <a href="/">Home</a>
       <span class="breadcrumb__sep">›</span>
-      <a href="../index.html#pers-devices">Devices</a>
+      <a href="/#pers-devices">Devices</a>
       <span class="breadcrumb__sep">›</span>
       <span class="breadcrumb__current">SW Series 300v</span>
     </div>
@@ -271,7 +272,7 @@
             <span><strong>Compact Form Factor:</strong> A slim, ergonomic frame designed to be the least intrusive wearable in the lineup.</span>
           </li>
         </ul>
-        <a href="../index.html#get-a-quote" class="btn btn--primary">Get A Quote</a>
+        <a href="/#get-a-quote" class="btn btn--primary">Get A Quote</a>
       </div>
     </div>
 
@@ -451,7 +452,7 @@
         <h3>Works Seamlessly with ResQHub™</h3>
         <p>Every 300v is built for the ResQHub platform — manage your entire fleet, tune device settings, and monitor events from a single dashboard.</p>
       </div>
-      <a href="../index.html#management-platform" class="btn btn--white" style="background:rgba(255,255,255,.12); color:white; border-color:rgba(255,255,255,.25); flex-shrink:0;">Explore ResQHub →</a>
+      <a href="/management-platform" class="btn btn--white" style="background:rgba(255,255,255,.12); color:white; border-color:rgba(255,255,255,.25); flex-shrink:0;">Explore ResQHub →</a>
     </div>
   </div>
 </section>
@@ -464,12 +465,12 @@
         <img src="../assets/logo-white.png" alt="TruAlert Systems">
       </div>
       <nav class="footer__links">
-        <a href="../index.html#pers-devices">PERS Devices</a>
-        <a href="../index.html#management-platform">Management Platform</a>
-        <a href="../index.html#partnership-options">Partnership Options</a>
-        <a href="../index.html#get-a-quote">Get A Quote</a>
-        <a href="../privacy-policy.html">Privacy Policy</a>
-        <a href="../terms-and-conditions.html">Terms &amp; Conditions</a>
+        <a href="/#pers-devices">PERS Devices</a>
+        <a href="/management-platform">Management Platform</a>
+        <a href="/#partnership-options">Partnership Options</a>
+        <a href="/#get-a-quote">Get A Quote</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/terms-and-conditions">Terms &amp; Conditions</a>
       </nav>
       <div></div>
     </div>
