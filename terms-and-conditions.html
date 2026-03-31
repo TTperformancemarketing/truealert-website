@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms and Conditions — TruAlert Systems</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:      #003D5B;
+      --navy-dark: #002A40;
+      --navy-mid:  #005580;
+      --navy-tint: #EFF6FF;
+      --bg:        #FFFFFF;
+      --bg-alt:    #F8FAFC;
+      --text:      #1E293B;
+      --muted:     #64748B;
+      --border:    #E2E8F0;
+      --white:     #FFFFFF;
+      --radius:    12px;
+      --shadow:    0 1px 3px rgba(0,0,0,.07), 0 4px 16px rgba(0,0,0,.05);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Navigation ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 80px;
+    }
+    .nav__logo img { height: 68px; width: auto; }
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .nav__links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color .15s;
+    }
+    .nav__links a:hover { color: var(--navy); }
+    .nav__dropdown { position: relative; }
+    .nav__dropdown > a { display: flex; align-items: center; gap: 4px; }
+    .nav__dropdown-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,.05), 0 10px 24px rgba(0,0,0,.1);
+      min-width: 175px;
+      padding: 6px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .15s;
+      z-index: 200;
+    }
+    .nav__dropdown:hover .nav__dropdown-menu { opacity: 1; pointer-events: auto; }
+    .nav__dropdown-menu a {
+      display: block;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text) !important;
+      border-radius: 6px;
+      transition: background .1s, color .1s;
+    }
+    .nav__dropdown-menu a:hover { background: var(--navy-tint); color: var(--navy) !important; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: background .18s, color .18s, border-color .18s, transform .1s;
+      white-space: nowrap;
+    }
+    .btn--primary { background: var(--navy); color: var(--white); border-color: var(--navy); }
+    .btn--primary:hover { background: var(--navy-dark); border-color: var(--navy-dark); }
+    .btn:active { transform: scale(.98); }
+
+    /* ── Page Header ── */
+    .page-header {
+      background: var(--navy);
+      padding: 56px 0;
+      color: var(--white);
+    }
+    .page-header h1 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .page-header p {
+      font-size: 14px;
+      color: rgba(255,255,255,.55);
+    }
+
+    /* ── Policy Content ── */
+    .policy {
+      padding: 72px 0 96px;
+    }
+    .policy__body {
+      max-width: 760px;
+    }
+    .policy__body h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-top: 40px;
+      margin-bottom: 12px;
+    }
+    .policy__body h2:first-child { margin-top: 0; }
+    .policy__body p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+    .policy__body ul {
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .policy__body ul li {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+      padding-left: 20px;
+      position: relative;
+    }
+    .policy__body ul li::before {
+      content: '•';
+      position: absolute;
+      left: 4px;
+      color: var(--navy-mid);
+      font-weight: 700;
+    }
+    .policy__body a {
+      color: var(--navy-mid);
+      text-decoration: underline;
+    }
+    .policy__body a:hover { color: var(--navy); }
+
+    /* ── Footer ── */
+    .footer { background: var(--navy); padding: 48px 0 32px; }
+    .footer__top {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 48px;
+      align-items: center;
+      padding-bottom: 32px;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+    .footer__logo img { height: 32px; }
+    .footer__links {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .footer__links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(255,255,255,.6);
+      transition: color .15s;
+    }
+    .footer__links a:hover { color: var(--white); }
+    .footer__copy {
+      padding-top: 24px;
+      text-align: center;
+      font-size: 13px;
+      color: rgba(255,255,255,.35);
+    }
+
+    @media (max-width: 900px) {
+      .footer__top { grid-template-columns: 1fr; text-align: center; gap: 24px; }
+    }
+    @media (max-width: 680px) {
+      .nav__links, .btn--primary { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo">
+        <img src="assets/logo-vector.png" alt="TruAlert Systems">
+      </a>
+      <div class="nav__links">
+        <div class="nav__dropdown">
+          <a href="index.html#pers-devices">PERS Devices <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="nav__dropdown-menu">
+            <a href="products/200i.html">SW Series 200i</a>
+            <a href="products/300v.html">SW Series 300v</a>
+            <a href="products/300i3.html">SW Series 300i3</a>
+          </div>
+        </div>
+        <a href="management-platform.html">Management Platform</a>
+        <a href="index.html#partnership-options">Partnership Options</a>
+      </div>
+      <a href="index.html#get-a-quote" class="btn btn--primary">Get A Quote</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <h1>Terms and Conditions</h1>
+    <p>Last updated: February 2025</p>
+  </div>
+</div>
+
+<section class="policy">
+  <div class="container">
+    <div class="policy__body">
+
+      <p>These terms and conditions (the "Terms and Conditions") govern the use of www.truealertsystems.com (the "Site"). This Site is owned and operated by Protect Connect Limited. This Site is an ecommerce website. By using this Site, you indicate that you have read and understand these Terms and Conditions and agree to abide by them at all times.</p>
+
+      <h2>Intellectual Property</h2>
+      <p>All content published and made available on our Site is the property of Protect Connect Limited and the Site's creators. This includes, but is not limited to images, text, logos, documents, downloadable files and anything that contributes to the composition of our Site.</p>
+
+      <h2>Third Party Goods and Services</h2>
+      <p>Our Site may offer goods and services from third parties. We cannot guarantee the quality or accuracy of goods and services made available by third parties on our Site.</p>
+
+      <h2>Limitation of Liability</h2>
+      <p>Protect Connect Limited and our directors, officers, agents, employees, subsidiaries, and affiliates will not be liable for any actions, claims, losses, damages, liabilities and expenses including legal fees from your use of the Site.</p>
+
+      <h2>Indemnity</h2>
+      <p>Except where prohibited by law, by using this Site you indemnify and hold harmless Protect Connect Limited and our directors, officers, agents, employees, subsidiaries, and affiliates from any actions, claims, losses, damages, liabilities and expenses including legal fees arising out of your use of our Site or your violation of these Terms and Conditions.</p>
+
+      <h2>SMS/Text Messaging Terms</h2>
+      <p>By providing your mobile number and opting in, you consent to receive SMS or MMS messages from us.</p>
+      <ul>
+        <li>Message frequency may vary. Msg &amp; data rates may apply.</li>
+        <li>You can opt out at any time by replying STOP. After you send STOP, we will send one final confirmation SMS and then no further messages will be sent.</li>
+        <li>For help, reply HELP or contact us at <a href="mailto:support@truealertsystems.com">support@truealertsystems.com</a>.</li>
+        <li>We do not sell, rent, or share your consent or mobile number with affiliates or third parties for marketing purposes.</li>
+        <li>Wireless carriers are not liable for delayed or undelivered messages.</li>
+        <li>Consent is not a condition of purchase.</li>
+      </ul>
+
+      <h2>Applicable Law</h2>
+      <p>These Terms and Conditions are governed by the laws of the city of Hong Kong.</p>
+
+      <h2>Severability</h2>
+      <p>If at any time any of the provisions set forth in these Terms and Conditions are found to be inconsistent or invalid under applicable laws, those provisions will be deemed void and will be removed from these Terms and Conditions. All other provisions will not be affected by the removal and the rest of these Terms and Conditions will still be considered valid.</p>
+
+      <h2>Changes</h2>
+      <p>These Terms and Conditions may be amended from time to time in order to maintain compliance with the law and to reflect any changes to the way we operate our Site and the way we expect users to behave on our Site. We will notify users by email of changes to these Terms and Conditions or post a notice on our Site.</p>
+
+      <h2>Privacy Policy</h2>
+      <p>Please review our <a href="privacy-policy.html">Privacy Policy</a>, which also governs your use of our Site and explains how we collect, use, and protect your personal information, including phone numbers and messaging consent.</p>
+
+      <h2>Contact Details</h2>
+      <p>Please contact us if you have any questions or concerns.</p>
+      <ul>
+        <li>(437) 494-8387</li>
+        <li><a href="mailto:support@truealertsystems.com">support@truealertsystems.com</a></li>
+        <li>Unit 1202, 12/F 299QRC, 287-299 Queen's Road Central, Sheung Wan, Hong Kong</li>
+      </ul>
+
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__logo">
+        <img src="assets/logo-white.png" alt="TruAlert Systems">
+      </div>
+      <nav class="footer__links">
+        <a href="index.html#pers-devices">PERS Devices</a>
+        <a href="management-platform.html">Management Platform</a>
+        <a href="index.html#partnership-options">Partnership Options</a>
+        <a href="index.html#get-a-quote">Get A Quote</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms-and-conditions.html">Terms &amp; Conditions</a>
+      </nav>
+      <div></div>
+    </div>
+    <p class="footer__copy">© 2025 TruAlert Systems. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>

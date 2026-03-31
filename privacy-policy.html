@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — TruAlert Systems</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:      #003D5B;
+      --navy-dark: #002A40;
+      --navy-mid:  #005580;
+      --navy-tint: #EFF6FF;
+      --bg:        #FFFFFF;
+      --bg-alt:    #F8FAFC;
+      --text:      #1E293B;
+      --muted:     #64748B;
+      --border:    #E2E8F0;
+      --white:     #FFFFFF;
+      --radius:    12px;
+      --shadow:    0 1px 3px rgba(0,0,0,.07), 0 4px 16px rgba(0,0,0,.05);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Navigation ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 80px;
+    }
+    .nav__logo img { height: 68px; width: auto; }
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .nav__links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color .15s;
+    }
+    .nav__links a:hover { color: var(--navy); }
+    .nav__dropdown { position: relative; }
+    .nav__dropdown > a { display: flex; align-items: center; gap: 4px; }
+    .nav__dropdown-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,.05), 0 10px 24px rgba(0,0,0,.1);
+      min-width: 175px;
+      padding: 6px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .15s;
+      z-index: 200;
+    }
+    .nav__dropdown:hover .nav__dropdown-menu { opacity: 1; pointer-events: auto; }
+    .nav__dropdown-menu a {
+      display: block;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text) !important;
+      border-radius: 6px;
+      transition: background .1s, color .1s;
+    }
+    .nav__dropdown-menu a:hover { background: var(--navy-tint); color: var(--navy) !important; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: background .18s, color .18s, border-color .18s, transform .1s;
+      white-space: nowrap;
+    }
+    .btn--primary { background: var(--navy); color: var(--white); border-color: var(--navy); }
+    .btn--primary:hover { background: var(--navy-dark); border-color: var(--navy-dark); }
+    .btn:active { transform: scale(.98); }
+
+    /* ── Page Header ── */
+    .page-header {
+      background: var(--navy);
+      padding: 56px 0;
+      color: var(--white);
+    }
+    .page-header h1 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .page-header p {
+      font-size: 14px;
+      color: rgba(255,255,255,.55);
+    }
+
+    /* ── Policy Content ── */
+    .policy {
+      padding: 72px 0 96px;
+    }
+    .policy__body {
+      max-width: 760px;
+    }
+    .policy__body h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-top: 40px;
+      margin-bottom: 12px;
+    }
+    .policy__body h2:first-child { margin-top: 0; }
+    .policy__body p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+    .policy__body ul {
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .policy__body ul li {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+      padding-left: 20px;
+      position: relative;
+    }
+    .policy__body ul li::before {
+      content: '•';
+      position: absolute;
+      left: 4px;
+      color: var(--navy-mid);
+      font-weight: 700;
+    }
+    .policy__body a {
+      color: var(--navy-mid);
+      text-decoration: underline;
+    }
+    .policy__body a:hover { color: var(--navy); }
+
+    /* ── Footer ── */
+    .footer { background: var(--navy); padding: 48px 0 32px; }
+    .footer__top {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 48px;
+      align-items: center;
+      padding-bottom: 32px;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+    .footer__logo img { height: 32px; }
+    .footer__links {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .footer__links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(255,255,255,.6);
+      transition: color .15s;
+    }
+    .footer__links a:hover { color: var(--white); }
+    .footer__copy {
+      padding-top: 24px;
+      text-align: center;
+      font-size: 13px;
+      color: rgba(255,255,255,.35);
+    }
+
+    @media (max-width: 900px) {
+      .footer__top { grid-template-columns: 1fr; text-align: center; gap: 24px; }
+    }
+    @media (max-width: 680px) {
+      .nav__links, .btn--primary { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo">
+        <img src="assets/logo-vector.png" alt="TruAlert Systems">
+      </a>
+      <div class="nav__links">
+        <div class="nav__dropdown">
+          <a href="index.html#pers-devices">PERS Devices <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="nav__dropdown-menu">
+            <a href="products/200i.html">SW Series 200i</a>
+            <a href="products/300v.html">SW Series 300v</a>
+            <a href="products/300i3.html">SW Series 300i3</a>
+          </div>
+        </div>
+        <a href="management-platform.html">Management Platform</a>
+        <a href="index.html#partnership-options">Partnership Options</a>
+      </div>
+      <a href="index.html#get-a-quote" class="btn btn--primary">Get A Quote</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <h1>Privacy Policy</h1>
+    <p>Effective Date: September 12, 2025</p>
+  </div>
+</div>
+
+<section class="policy">
+  <div class="container">
+    <div class="policy__body">
+
+      <p>This Privacy Policy (the "Policy") governs the collection, use, and disclosure of personal information by Protect Connect Limited ("True Alert Systems", "we", "us", or "our") in connection with the use of www.truealertsystems.com (the "Site") and related services. By using our Site or Services, you acknowledge that you have read, understood, and agree to be bound by this Policy.</p>
+
+      <h2>Information We Collect</h2>
+      <p>We may collect the following types of information depending on how you interact with us:</p>
+      <ul>
+        <li>Identifiers such as name, email address, postal address, and phone number.</li>
+        <li>Account and transaction information such as orders and subscription details.</li>
+        <li>Communications you send us, such as support requests.</li>
+        <li>Device and usage data such as IP address, cookie identifiers, and browsing activity.</li>
+        <li>Messaging metadata, including SMS consent and opt-out records.</li>
+      </ul>
+
+      <h2>Sources of Information</h2>
+      <p>We may obtain personal information directly from you, automatically through cookies and similar technologies, from service providers and partners, and from carriers or The Campaign Registry (TCR) solely for compliance with A2P 10DLC requirements.</p>
+
+      <h2>Use of Information</h2>
+      <p>We use personal information to:</p>
+      <ul>
+        <li>Provide and improve our platform and services.</li>
+        <li>Process subscriptions, payments, and communicate with you.</li>
+        <li>Operate SMS/Text messaging programs and honor HELP/STOP requests.</li>
+        <li>Comply with laws, regulations, and carrier rules.</li>
+        <li>Prevent fraud, abuse, and security incidents.</li>
+      </ul>
+
+      <h2>Data Sharing</h2>
+      <p>We do not sell, rent, or share your personal information, including mobile numbers and consent, with affiliates or third parties for marketing purposes. Your information will only be shared in the following circumstances:</p>
+      <ul>
+        <li>With service providers who perform services on our behalf (such as hosting, payment processors, and messaging platforms).</li>
+        <li>In connection with a merger, acquisition, or sale of assets.</li>
+        <li>To comply with legal obligations, law enforcement requests, or protect rights and safety.</li>
+        <li>With your explicit consent.</li>
+      </ul>
+
+      <h2>SMS/Text Messaging &amp; A2P 10DLC Program</h2>
+      <p>If you enroll in our SMS/Text messaging programs, the following applies:</p>
+      <ul>
+        <li><strong>Program:</strong> Messages may include alerts, reminders, and promotions.</li>
+        <li><strong>Consent:</strong> Marketing texts require your opt-in. Consent is not a condition of purchase.</li>
+        <li><strong>Records:</strong> We maintain opt-in and opt-out records as required by carriers and law.</li>
+        <li><strong>Frequency &amp; Charges:</strong> Message frequency varies. Msg &amp; data rates may apply.</li>
+        <li><strong>Opt-out:</strong> Reply STOP (or END, CANCEL, UNSUBSCRIBE, QUIT). We will confirm and stop further messages. Reply STOP ALL to stop all programs.</li>
+        <li><strong>Help:</strong> Reply HELP or contact us at <a href="mailto:support@truealertsystems.com">support@truealertsystems.com</a>.</li>
+        <li><strong>Re-enroll:</strong> Text START or re-submit consent.</li>
+        <li><strong>Carrier Disclosure:</strong> Wireless carriers are not liable for delayed or undelivered messages.</li>
+      </ul>
+
+      <h2>Retention</h2>
+      <p>We retain personal information only as long as necessary to fulfill the purposes set out in this Policy and to comply with applicable laws. Consent and opt-out records are kept for compliance purposes.</p>
+
+      <h2>International Data Transfers</h2>
+      <p>Information may be transferred to jurisdictions outside your own, including Hong Kong and other regions where our service providers operate.</p>
+
+      <h2>Security</h2>
+      <p>We use reasonable administrative, technical, and organizational safeguards appropriate to the sensitivity of the information processed.</p>
+
+      <h2>Children's Privacy</h2>
+      <p>Our Services are not directed to children under 13. We do not knowingly collect information from minors without authorization.</p>
+
+      <h2>Your Rights</h2>
+      <p>Depending on your jurisdiction, you may have rights of access, correction, deletion, and objection. To exercise your rights, contact us at <a href="mailto:support@truealertsystems.com">support@truealertsystems.com</a>.</p>
+
+      <h2>Changes to this Policy</h2>
+      <p>We may update this Policy from time to time. We will post the revised version on our Site with an updated Effective Date.</p>
+
+      <h2>Contact Details</h2>
+      <p>If you have any questions or concerns, please contact us at:</p>
+      <ul>
+        <li>(437) 494-8387</li>
+        <li><a href="mailto:support@truealertsystems.com">support@truealertsystems.com</a></li>
+        <li>Unit 1202, 12/F 299QRC, 287-299 Queen's Road Central, Sheung Wan, Hong Kong</li>
+      </ul>
+
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__logo">
+        <img src="assets/logo-white.png" alt="TruAlert Systems">
+      </div>
+      <nav class="footer__links">
+        <a href="index.html#pers-devices">PERS Devices</a>
+        <a href="management-platform.html">Management Platform</a>
+        <a href="index.html#partnership-options">Partnership Options</a>
+        <a href="index.html#get-a-quote">Get A Quote</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms-and-conditions.html">Terms &amp; Conditions</a>
+      </nav>
+      <div></div>
+    </div>
+    <p class="footer__copy">© 2025 TruAlert Systems. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>
