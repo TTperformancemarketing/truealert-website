@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResQHub™ Management Platform — TruAlert Systems</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ── Design Tokens ─────────────────────────────────── */
+    :root {
+      --navy:      #003D5B;
+      --navy-dark: #002A40;
+      --navy-mid:  #005580;
+      --navy-tint: #EFF6FF;
+      --bg:        #FFFFFF;
+      --bg-alt:    #F8FAFC;
+      --text:      #1E293B;
+      --muted:     #64748B;
+      --border:    #E2E8F0;
+      --white:     #FFFFFF;
+      --radius:    12px;
+      --shadow:    0 1px 3px rgba(0,0,0,.07), 0 4px 16px rgba(0,0,0,.05);
+      --shadow-lg: 0 4px 8px rgba(0,0,0,.08), 0 12px 32px rgba(0,0,0,.08);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; font-size: 16px; line-height: 1.6; color: var(--text); background: var(--bg); -webkit-font-smoothing: antialiased; }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+    .section { padding: 80px 0; }
+    .section--alt { background: var(--bg-alt); }
+    .section--navy { background: var(--navy); color: var(--white); }
+
+    h1, h2, h3, h4 { line-height: 1.2; font-weight: 700; color: var(--navy); }
+    h1 { font-size: clamp(2rem, 4vw, 3rem); }
+    h2 { font-size: clamp(1.5rem, 2.8vw, 2rem); }
+    h3 { font-size: 1.1rem; }
+    h4 { font-size: 0.95rem; }
+
+    .label {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--navy-mid);
+      margin-bottom: 12px;
+    }
+    .section--navy .label { color: rgba(255,255,255,.55); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: background .18s, color .18s, border-color .18s;
+      white-space: nowrap;
+    }
+    .btn--primary { background: var(--navy); color: var(--white); border-color: var(--navy); }
+    .btn--primary:hover { background: var(--navy-dark); border-color: var(--navy-dark); }
+    .btn--white { background: var(--white); color: var(--navy); border-color: var(--white); }
+    .btn--white:hover { background: var(--navy-tint); }
+    .btn--outline {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: 600;
+      border: 1.5px solid var(--navy); color: var(--navy); background: transparent;
+      transition: background .15s, color .15s;
+    }
+    .btn--outline:hover { background: var(--navy); color: var(--white); }
+
+    .card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+
+    /* ── Nav ───────────────────────────────────────────── */
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 1px solid var(--border); }
+    .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 80px; }
+    .nav__logo img { height: 68px; width: auto; }
+    .nav__links { display: flex; align-items: center; gap: 32px; }
+    .nav__links a { font-size: 14px; font-weight: 500; color: var(--muted); transition: color .15s; }
+    .nav__links a:hover, .nav__links a.active { color: var(--navy); }
+    .nav__dropdown { position: relative; }
+    .nav__dropdown > a { display: flex; align-items: center; gap: 4px; }
+    .nav__dropdown-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,.05), 0 10px 24px rgba(0,0,0,.1);
+      min-width: 175px;
+      padding: 6px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .15s;
+      z-index: 200;
+    }
+    .nav__dropdown:hover .nav__dropdown-menu { opacity: 1; pointer-events: auto; }
+    .nav__dropdown-menu a {
+      display: block;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text) !important;
+      border-radius: 6px;
+      transition: background .1s, color .1s;
+    }
+    .nav__dropdown-menu a:hover { background: var(--navy-tint); color: var(--navy) !important; }
+
+    /* ── Breadcrumb ────────────────────────────────────── */
+    .breadcrumb { padding: 14px 0; border-bottom: 1px solid var(--border); }
+    .breadcrumb__inner { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+    .breadcrumb__inner a { color: var(--muted); transition: color .15s; }
+    .breadcrumb__inner a:hover { color: var(--navy); }
+    .breadcrumb__sep { color: var(--border); }
+    .breadcrumb__current { color: var(--navy); font-weight: 500; }
+
+    /* ── Page Hero ─────────────────────────────────────── */
+    .platform-hero {
+      background: var(--navy);
+      padding: 80px 0 0;
+      overflow: hidden;
+    }
+    .platform-hero__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: end;
+    }
+    .platform-hero__copy { padding-bottom: 80px; }
+    .platform-hero__copy h1 { color: var(--white); margin-bottom: 20px; }
+    .platform-hero__copy p {
+      font-size: 17px;
+      color: rgba(255,255,255,.75);
+      line-height: 1.75;
+      margin-bottom: 36px;
+    }
+    .platform-hero__img {
+      border-radius: 16px 16px 0 0;
+      overflow: hidden;
+      box-shadow: 0 -8px 40px rgba(0,0,0,.25);
+      align-self: flex-end;
+    }
+    .platform-hero__img img { width: 100%; display: block; }
+
+    /* ── Two-Column Section Layout ────────────────────── */
+    .section-two-col {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .section-two-col__header {
+      position: sticky;
+      top: 100px;
+    }
+    .section-two-col__header .label { margin-bottom: 12px; }
+    .section-two-col__header h2 { margin-bottom: 16px; }
+    .section-two-col__header p { font-size: 15px; color: var(--muted); line-height: 1.75; }
+    .section-two-col__cards {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .feature-card {
+      display: flex;
+      gap: 18px;
+      padding: 28px;
+    }
+    .feature-icon {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 11px;
+      background: var(--navy-tint);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--navy);
+    }
+    .section--navy .feature-icon {
+      background: rgba(255,255,255,.1);
+      color: var(--white);
+    }
+    .section--navy .feature-card {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: var(--radius);
+    }
+    .feature-card h4 { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 5px; }
+    .section--navy .feature-card h4 { color: var(--white); }
+    .feature-card .capability { font-size: 13px; color: var(--text); margin-bottom: 4px; line-height: 1.5; }
+    .section--navy .feature-card .capability { color: rgba(255,255,255,.75); }
+    .feature-card .benefit { font-size: 13px; color: var(--muted); line-height: 1.5; }
+    .section--navy .feature-card .benefit { color: rgba(255,255,255,.5); }
+
+    /* ── CTA Banner ────────────────────────────────────── */
+    .cta-banner {
+      background: var(--navy);
+      border-radius: var(--radius);
+      padding: 56px 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+    }
+    .cta-banner h2 { color: var(--white); margin-bottom: 10px; font-size: 1.6rem; }
+    .cta-banner p { color: rgba(255,255,255,.7); font-size: 15px; }
+
+    /* ── Footer ─────────────────────────────────────────── */
+    .footer { background: var(--navy); padding: 48px 0 32px; }
+    .footer__top {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 48px;
+      align-items: center;
+      padding-bottom: 32px;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+    .footer__logo img { height: 32px; }
+    .footer__links { display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; }
+    .footer__links a { font-size: 14px; font-weight: 500; color: rgba(255,255,255,.6); transition: color .15s; }
+    .footer__links a:hover { color: var(--white); }
+    .footer__copy { padding-top: 24px; text-align: center; font-size: 13px; color: rgba(255,255,255,.35); }
+
+    /* ── Responsive ─────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .platform-hero__inner { grid-template-columns: 1fr; }
+      .platform-hero__img { display: none; }
+      .platform-hero__copy { padding-bottom: 64px; }
+      .section-two-col { grid-template-columns: 1fr; gap: 32px; }
+      .section-two-col__header { position: static; }
+      .cta-banner { flex-direction: column; text-align: center; padding: 40px 32px; }
+      .footer__top { grid-template-columns: 1fr; text-align: center; gap: 24px; }
+      .footer__links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Nav ──────────────────────────────────────────────── -->
+<header class="nav">
+  <div class="container">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__logo">
+        <img src="assets/TruAlert-Logo-Vector-crop2.png" alt="TruAlert Systems">
+      </a>
+      <nav class="nav__links">
+        <div class="nav__dropdown">
+          <a href="index.html#pers-devices">PERS Devices <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="nav__dropdown-menu">
+            <a href="products/200i.html">SW Series 200i</a>
+            <a href="products/300v.html">SW Series 300v</a>
+            <a href="products/300i3.html">SW Series 300i3</a>
+          </div>
+        </div>
+        <a href="management-platform.html" class="active">Management Platform</a>
+        <a href="index.html#partnership-options">Partnership Options</a>
+      </nav>
+      <a href="index.html#get-a-quote" class="btn btn--primary">Get A Quote</a>
+    </div>
+  </div>
+</header>
+
+<!-- ── Breadcrumb ────────────────────────────────────────── -->
+<div class="breadcrumb">
+  <div class="container">
+    <div class="breadcrumb__inner">
+      <a href="index.html">Home</a>
+      <span class="breadcrumb__sep">›</span>
+      <span class="breadcrumb__current">Management Platform</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── Page Hero ─────────────────────────────────────────── -->
+<section class="platform-hero">
+  <div class="container">
+    <div class="platform-hero__inner">
+      <div class="platform-hero__copy">
+        <span class="label" style="color:rgba(255,255,255,.55);">ResQHub™</span>
+        <h1>One Platform.<br>Total Control.</h1>
+        <p>ResQHub™ is the device management and operations platform built specifically for PERS dealers. Monitor your entire fleet in real time, manage subscribers, configure devices remotely, and run a tighter operation — all from a single interface.</p>
+        <a href="index.html#get-a-quote" class="btn btn--white">Get A Quote</a>
+      </div>
+      <div class="platform-hero__img">
+        <img src="assets/Dealer-Dashboard-Overview-1024x712.png" alt="ResQHub Device Management Dashboard">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Section 1: Remote Control & Diagnostics ──────────── -->
+<section class="section">
+  <div class="container">
+    <div class="section-two-col">
+      <div class="section-two-col__header">
+        <span class="label">Remote Control & Diagnostics</span>
+        <h2>Unrivaled Remote Control & Diagnostics</h2>
+        <p>Take control of every device in your fleet without rolling a truck. Slash support time and eliminate unnecessary site visits.</p>
+      </div>
+      <div class="section-two-col__cards">
+
+      <div class="card feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+        </div>
+        <div>
+          <h4>Remote Fall Detection Tuning</h4>
+          <p class="capability">Adjust fall detection sensitivity per user remotely, so you can optimize performance and eliminate false alarms without ever rolling a truck.</p>
+        </div>
+      </div>
+
+      <div class="card feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </div>
+        <div>
+          <h4>Remote Device Actions</h4>
+          <p class="capability">Locate, reboot, or power off devices and trigger audible alerts to find them — all remotely — so you can troubleshoot faster and assist users without a site visit.</p>
+        </div>
+      </div>
+
+      <div class="card feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </div>
+        <div>
+          <h4>Remote Configuration</h4>
+          <p class="capability">Manage Do Not Disturb settings and update contact lists on the fly, so you can customize any user's experience instantly without ever touching the device.</p>
+        </div>
+      </div>
+
+      <div class="card feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        </div>
+        <div>
+          <h4>Device Diagnostics</h4>
+          <p class="capability">View last connection, average battery life, data usage, and signal strength history for any device, giving you the visibility to troubleshoot faster and more accurately.</p>
+        </div>
+      </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Section 2: Proactive Monitoring & Alerting ───────── -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-two-col">
+      <div class="section-two-col__header">
+        <span class="label">Proactive Monitoring & Alerting</span>
+        <h2>Stop Reacting. Start Preventing.</h2>
+        <p>ResQHub gives you the visibility to catch potential issues before they impact your customers — and the tools to act instantly when they do.</p>
+      </div>
+      <div class="section-two-col__cards">
+
+      <div class="card feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        </div>
+        <div>
+          <h4>Real-Time Device Status</h4>
+          <p class="capability">Monitor battery levels, signal strength, and connection status across your entire subscriber base — giving you the visibility to manage proactively and get ahead of issues before they reach your customers.</p>
+        </div>
+      </div>
+
+      <div class="card feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+        </div>
+        <div>
+          <h4>Customizable Caregiver Alerts</h4>
+          <p class="capability">Define contacts to receive SMS/Email alerts for SOS events, falls, or low battery — complete with map location — so families stay informed and calls to your center go down.</p>
+        </div>
+      </div>
+
+      <div class="card feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </div>
+        <div>
+          <h4>On-Demand Location</h4>
+          <p class="capability">Allow authorized users to locate a device instantly via the portal or a caregiver text, making it a valuable add-on for families and a critical tool when emergencies happen.</p>
+        </div>
+      </div>
+
+      <div class="card feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div>
+          <h4>Complete Event & Device History</h4>
+          <p class="capability">Every device event and programming change is permanently logged, giving you a full audit trail for accountability, troubleshooting, and demonstrating service value to your customers.</p>
+        </div>
+      </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Section 3: Operations & User Management ──────────── -->
+<section class="section">
+  <div class="container">
+    <div class="section-two-col">
+      <div class="section-two-col__header">
+        <span class="label">Operations & User Management</span>
+        <h2>Built to Scale With Your Business</h2>
+        <p>Manage your operation efficiently whether you have ten devices or ten thousand — with the controls and visibility to stay in command as you grow.</p>
+      </div>
+      <div class="section-two-col__cards">
+
+        <div class="card feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+          </div>
+          <div>
+            <h4>Sub-Dealer Management</h4>
+            <p class="capability">Create and manage your own sub-dealer hierarchies, assign devices, and control visibility — so resellers and multi-location businesses can scale efficiently under your umbrella.</p>
+          </div>
+        </div>
+
+        <div class="card feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          </div>
+          <div>
+            <h4>Custom User Roles & Permissions</h4>
+            <p class="capability">Define exactly who on your team can see and do what within ResQHub, so you can tighten security and tailor workflows to how your staff actually operates.</p>
+          </div>
+        </div>
+
+        <div class="card feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          </div>
+          <div>
+            <h4>Subscriber Lifecycle Management</h4>
+            <p class="capability">You control when each device is activated or deactivated, giving you precise management of your subscriber billing cycles and operational costs.</p>
+          </div>
+        </div>
+
+        <div class="card feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          </div>
+          <div>
+            <h4>Full User Audit Trail</h4>
+            <p class="capability">Every configuration change made by any user on any device is tracked and logged, ensuring complete accountability and security visibility across your entire operation.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Section 4: Reporting & Analytics ─────────────────── -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-two-col">
+      <div class="section-two-col__header">
+        <span class="label">Reporting & Analytics</span>
+        <h2>Data That Drives Better Decisions</h2>
+        <p>Leverage operational data to understand your fleet, manage your business more effectively, and identify opportunities for growth.</p>
+      </div>
+      <div class="section-two-col__cards">
+
+      <div class="card feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path stroke-linecap="round" stroke-linejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg>
+        </div>
+        <div>
+          <h4>Standard Reports</h4>
+          <p class="capability">Essential reports — Active Devices, Inactivity, Inventory, Event Logs — available right out of the box, so the critical operational data you need is always there when you need it.</p>
+        </div>
+      </div>
+
+      <div class="card feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/></svg>
+        </div>
+        <div>
+          <h4>Custom Reporting Capabilities</h4>
+          <p class="capability">Work with us to build reports tailored to your unique business KPIs, giving you deeper insights into your operation to drive growth and efficiency.</p>
+        </div>
+      </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Section 5: Platform Flexibility ──────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="section-two-col">
+      <div class="section-two-col__header">
+        <span class="label">Platform Flexibility & Customization</span>
+        <h2>Built to Adapt to Your Business</h2>
+        <p>We built ResQHub to work the way you work — not the other way around. Choose your stack, keep your brand, and grow on your terms.</p>
+      </div>
+      <div class="section-two-col__cards">
+
+      <div class="card feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </div>
+        <div>
+          <h4>Multiple Partnership Models</h4>
+          <p class="capability">Use ResQHub with your existing hardware (SaaS), opt for a full turnkey solution, or bring your own SIM and monitoring — so you can operate under the exact model that works for your business.</p>
+        </div>
+      </div>
+
+      <div class="card feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+        </div>
+        <div>
+          <h4>Universal Integration</h4>
+          <p class="capability">Designed to integrate with any monitoring center or cellular provider, giving you maximum flexibility and zero vendor lock-in.</p>
+        </div>
+      </div>
+
+      <div class="card feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+        </div>
+        <div>
+          <h4>Full White-Labeling</h4>
+          <p class="capability">Customize the platform with your own URLs, logos, colors, and alert messaging, so your brand is reinforced seamlessly at every customer touchpoint.</p>
+        </div>
+      </div>
+
+      <div class="card feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+        </div>
+        <div>
+          <h4>Custom Feature Potential</h4>
+          <p class="capability">Based on need and volume, we can explore developing custom features specifically for your operation — a true partnership that evolves and grows with your business.</p>
+        </div>
+      </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ───────────────────────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="cta-banner">
+      <div>
+        <h2>Ready to See ResQHub™ in Action?</h2>
+        <p>Get in touch and a TruAlert specialist will walk you through the platform and help you find the right model for your business.</p>
+      </div>
+      <a href="index.html#get-a-quote" class="btn btn--white">Get A Quote</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__logo">
+        <img src="assets/logo-white.png" alt="TruAlert Systems">
+      </div>
+      <nav class="footer__links">
+        <a href="index.html#pers-devices">PERS Devices</a>
+        <a href="management-platform.html">Management Platform</a>
+        <a href="index.html#partnership-options">Partnership Options</a>
+        <a href="index.html#get-a-quote">Get A Quote</a>
+      </nav>
+    </div>
+    <p class="footer__copy">© 2025 TruAlert Systems. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>

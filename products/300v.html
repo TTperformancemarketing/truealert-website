@@ -21,30 +21,70 @@
       --white:     #FFFFFF;
       --radius:    12px;
       --shadow:    0 1px 3px rgba(0,0,0,.07), 0 4px 16px rgba(0,0,0,.05);
+      --shadow-lg: 0 4px 8px rgba(0,0,0,.08), 0 12px 32px rgba(0,0,0,.08);
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', system-ui, sans-serif; font-size: 16px; line-height: 1.6; color: var(--text); background: var(--bg); -webkit-font-smoothing: antialiased; }
     img { display: block; max-width: 100%; }
     a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
 
     .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
-    h1, h2, h3 { line-height: 1.2; font-weight: 700; color: var(--navy); }
+    .section { padding: 72px 0; }
+    .section--alt { background: var(--bg-alt); }
+
+    h1, h2, h3, h4 { line-height: 1.2; font-weight: 700; color: var(--navy); }
+    h1 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); }
+    h2 { font-size: clamp(1.4rem, 2.5vw, 1.8rem); }
+    h3 { font-size: 1.05rem; }
+
     .label { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--navy-mid); margin-bottom: 10px; }
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 28px; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; border: 2px solid transparent; transition: background .18s, color .18s; white-space: nowrap; }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 28px; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; border: 2px solid transparent; transition: background .18s, color .18s, border-color .18s; white-space: nowrap; }
     .btn--primary { background: var(--navy); color: var(--white); border-color: var(--navy); }
     .btn--primary:hover { background: var(--navy-dark); border-color: var(--navy-dark); }
-    .btn--outline { background: transparent; color: var(--navy); border-color: var(--navy); }
-    .btn--outline:hover { background: var(--navy); color: var(--white); }
+
     .card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
 
+    /* Nav */
     .nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 1px solid var(--border); }
-    .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
-    .nav__logo img { height: 36px; }
+    .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 80px; }
+    .nav__logo img { height: 68px; width: auto; }
     .nav__links { display: flex; align-items: center; gap: 32px; }
     .nav__links a { font-size: 14px; font-weight: 500; color: var(--muted); transition: color .15s; }
     .nav__links a:hover { color: var(--navy); }
+    .nav__dropdown { position: relative; }
+    .nav__dropdown > a { display: flex; align-items: center; gap: 4px; }
+    .nav__dropdown-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,.05), 0 10px 24px rgba(0,0,0,.1);
+      min-width: 175px;
+      padding: 6px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .15s;
+      z-index: 200;
+    }
+    .nav__dropdown:hover .nav__dropdown-menu { opacity: 1; pointer-events: auto; }
+    .nav__dropdown-menu a {
+      display: block;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text) !important;
+      border-radius: 6px;
+      transition: background .1s, color .1s;
+    }
+    .nav__dropdown-menu a:hover { background: var(--navy-tint); color: var(--navy) !important; }
 
+    /* Breadcrumb */
     .breadcrumb { padding: 16px 0; border-bottom: 1px solid var(--border); }
     .breadcrumb__inner { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
     .breadcrumb__inner a { color: var(--muted); transition: color .15s; }
@@ -52,65 +92,102 @@
     .breadcrumb__sep { color: var(--border); }
     .breadcrumb__current { color: var(--navy); font-weight: 500; }
 
-    /* Hero */
-    .hero { padding: 96px 0; text-align: center; background: var(--bg-alt); }
-    .coming-badge {
-      display: inline-block;
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      background: var(--navy-tint);
-      color: var(--navy-mid);
-      border: 1px solid #D1E9FF;
-      margin-bottom: 20px;
+    /* Product Hero */
+    .product-hero { padding: 40px 0 28px; }
+    .product-hero__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+    .product-img {
+      border-radius: 16px;
+      background: #EAECEF;
+      border: 1.5px solid rgba(0, 61, 91, 0.18);
+      box-shadow: 0 2px 8px rgba(0,0,0,.07), 0 8px 24px rgba(0,0,0,.08);
+      padding: 10px;
     }
-    .hero h1 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 16px; }
-    .hero__sub { font-size: 17px; color: var(--muted); max-width: 520px; margin: 0 auto 40px; line-height: 1.7; }
-    .hero__chips { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 40px; }
-    .hero__chip {
+    .product-img img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+    }
+    .product-hero__price { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--navy-mid); margin-bottom: 10px; }
+    .product-hero h1 { margin-bottom: 8px; }
+    .product-hero__tagline { font-size: 17px; font-weight: 500; color: var(--muted); margin-bottom: 20px; }
+    .product-hero__desc { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 24px; }
+    .product-hero__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+    .product-hero__tag { font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 20px; background: var(--navy-tint); color: var(--navy-mid); border: 1px solid #D1E9FF; }
+
+    /* Specs List */
+    .specs-list { border-radius: var(--radius); overflow: hidden; }
+    .specs-list__header {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      padding: 14px 20px;
+      background: var(--navy);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--white);
+      border-radius: 8px 8px 0 0;
+    }
+    .specs-list__row {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .specs-list__row:last-child { border-bottom: none; }
+    .specs-list__row:nth-child(even) { background: var(--bg-alt); }
+    .specs-list__key {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 10px 18px;
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 8px;
+      gap: 10px;
+      padding: 13px 20px;
       font-size: 14px;
       font-weight: 600;
       color: var(--navy);
-      box-shadow: var(--shadow);
     }
-    .hero__ctas { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-
-    /* Available Devices */
-    .other-devices { padding: 80px 0; }
-    .other-devices__header { text-align: center; margin-bottom: 48px; }
-    .other-devices__header h2 { font-size: 1.5rem; margin-bottom: 8px; }
-    .other-devices__header p { color: var(--muted); }
-    .other-devices__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 720px; margin: 0 auto; }
-    .device-card { padding: 28px; display: flex; align-items: center; gap: 20px; transition: box-shadow .2s, transform .2s; }
-    .device-card:hover { box-shadow: 0 4px 8px rgba(0,0,0,.08), 0 12px 32px rgba(0,0,0,.08); transform: translateY(-2px); }
-    .device-card__badge {
-      width: 56px;
-      height: 56px;
-      border-radius: 12px;
-      background: var(--navy);
+    .specs-list__val {
+      padding: 13px 20px 13px 0;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .spec-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: var(--navy-tint);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
-      font-weight: 800;
-      color: var(--white);
+      color: var(--navy);
       flex-shrink: 0;
     }
-    .device-card__content h3 { font-size: 15px; margin-bottom: 4px; }
-    .device-card__content p { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
-    .device-card__link { font-size: 13px; font-weight: 600; color: var(--navy-mid); }
-    .device-card__link:hover { color: var(--navy); }
 
+    /* Feature Bullets */
+    .feature-bullets { list-style: none; margin: 20px 0 28px; display: flex; flex-direction: column; gap: 12px; }
+    .feature-bullets li { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: var(--muted); line-height: 1.55; }
+    .feature-bullets li svg { flex-shrink: 0; margin-top: 2px; color: var(--navy); }
+
+    /* Feature Icons Row */
+    .feature-icons-wrap { margin-top: 28px; text-align: center; }
+    .feature-icons-wrap .label { display: block; margin-bottom: 24px; }
+    .feature-icons { display: flex; justify-content: center; gap: 40px; }
+    .feature-icon-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .feature-icon-item img { width: 90px; height: 90px; display: block; }
+    .feature-icon-item span { font-size: 11px; font-weight: 700; letter-spacing: .04em; color: var(--navy); text-align: center; white-space: nowrap; }
+
+    /* ResQHub Callout */
+    .rq-callout {
+      background: var(--navy);
+      border-radius: 16px;
+      padding: 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+    }
+    .rq-callout__copy h3 { font-size: 1.2rem; color: var(--white); margin-bottom: 8px; }
+    .rq-callout__copy p { font-size: 15px; color: rgba(255,255,255,.7); }
+
+    /* Footer */
     .footer { background: var(--navy); padding: 48px 0 32px; }
     .footer__top { display: grid; grid-template-columns: auto 1fr auto; gap: 48px; align-items: center; padding-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,.1); }
     .footer__logo img { height: 32px; }
@@ -119,9 +196,18 @@
     .footer__links a:hover { color: var(--white); }
     .footer__copy { padding-top: 24px; text-align: center; font-size: 13px; color: rgba(255,255,255,.35); }
 
+    @media (max-width: 900px) {
+      .product-hero__inner { grid-template-columns: 1fr; gap: 40px; }
+      .product-hero__img { aspect-ratio: 16/9; }
+      .rq-callout { flex-direction: column; text-align: center; padding: 32px; }
+      .footer__top { grid-template-columns: 1fr; text-align: center; gap: 24px; }
+    }
     @media (max-width: 680px) {
+      .features__grid { grid-template-columns: 1fr 1fr; }
       .nav__links { display: none; }
-      .other-devices__grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .features__grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -135,7 +221,14 @@
         <img src="../assets/logo-vector.png" alt="TruAlert Systems">
       </a>
       <div class="nav__links">
-        <a href="../index.html#pers-devices">PERS Devices</a>
+        <div class="nav__dropdown">
+          <a href="../index.html#pers-devices">PERS Devices <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="nav__dropdown-menu">
+            <a href="200i.html">SW Series 200i</a>
+            <a href="300v.html">SW Series 300v</a>
+            <a href="300i3.html">SW Series 300i3</a>
+          </div>
+        </div>
         <a href="../index.html#management-platform">Management Platform</a>
         <a href="../index.html#partnership-options">Partnership Options</a>
       </div>
@@ -157,57 +250,208 @@
   </div>
 </div>
 
-<!-- Hero -->
-<section class="hero">
+<!-- Product Hero -->
+<section class="product-hero">
   <div class="container">
-    <span class="coming-badge">Coming Soon</span>
-    <h1>TruAlert SW Series 300v</h1>
-    <p class="hero__sub">The next evolution in PERS smartwatch technology. Launching soon — contact us to learn more and get notified when available.</p>
-    <div class="hero__chips">
-      <div class="hero__chip">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#003D5B" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
-        Premium Design
+    <div class="product-hero__inner">
+      <div class="product-img">
+        <img src="../assets/300v-slide-1.jpeg" alt="SW Series 300v">
       </div>
-      <div class="hero__chip">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#003D5B" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
-        Advanced Sensors
-      </div>
-      <div class="hero__chip">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#003D5B" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-        Full ResQHub Integration
+      <div>
+        <p class="product-hero__price" style="text-transform: none;">SW Series 300v</p>
+        <h1>Ultra-Lightweight & Slim Profile</h1>
+        <p class="product-hero__desc">The SW 300v is specifically designed for maximum comfort and all-day wearability. As one of the smallest and lightest medical alert watches available, it offers a streamlined, low-profile fit that feels natural on the wrist while providing full safety coverage.</p>
+        <ul class="feature-bullets">
+          <li>
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span><strong>Featherweight Build:</strong> Only 42g for an effortless fit that won't hinder daily movement.</span>
+          </li>
+          <li>
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span><strong>Compact Form Factor:</strong> A slim, ergonomic frame designed to be the least intrusive wearable in the lineup.</span>
+          </li>
+        </ul>
+        <a href="../index.html#get-a-quote" class="btn btn--primary">Get A Quote</a>
       </div>
     </div>
-    <div class="hero__ctas">
-      <a href="mailto:success@truealertsystems.com?subject=300v Update Request" class="btn btn--primary">Get Notified When Available</a>
-      <a href="../index.html#pers-devices" class="btn btn--outline">View Available Devices</a>
+
+    <div class="feature-icons-wrap">
+      <span class="label">Key Features</span>
+    <div class="feature-icons">
+      <div class="feature-icon-item">
+        <img src="../assets/icons/sos-alarm.svg" width="90" height="90" alt="SOS Alarm">
+        <span>SOS Alarm</span>
+      </div>
+      <div class="feature-icon-item">
+        <img src="../assets/icons/auto-fall-detection.svg" width="90" height="90" alt="Auto Fall Detection">
+        <span>Fall Detection</span>
+      </div>
+      <div class="feature-icon-item">
+        <img src="../assets/icons/GPS-locating.svg" width="90" height="90" alt="GPS Locating">
+        <span>GPS Locating</span>
+      </div>
+      <div class="feature-icon-item">
+        <img src="../assets/icons/2-way-voice.svg" width="90" height="90" alt="2-Way Voice">
+        <span>2-Way Voice</span>
+      </div>
+      <div class="feature-icon-item">
+        <img src="../assets/icons/heart-rater-monitoring.svg" width="90" height="90" alt="Heart Rate Monitoring">
+        <span>Heart Rate</span>
+      </div>
+      <div class="feature-icon-item">
+        <img src="../assets/icons/step-counter.svg" width="90" height="90" alt="Step Counter">
+        <span>Step Counter</span>
+      </div>
+    </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Full Specs -->
+<section class="section section--alt">
+  <div class="container">
+    <span class="label">Technical Specifications</span>
+    <h2 style="margin-bottom: 32px;">Full Technical Specs</h2>
+    <div class="card specs-list">
+      <div class="specs-list__header">
+        <span>Specification</span>
+        <span>Detail</span>
+      </div>
+
+      <div class="specs-list__row">
+        <div class="specs-list__key">
+          <span class="spec-icon"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.871A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0H3"/></svg></span>
+          Display
+        </div>
+        <div class="specs-list__val">1.47" IPS Touchscreen | 172 × 320 Resolution</div>
+      </div>
+
+      <div class="specs-list__row">
+        <div class="specs-list__key">
+          <span class="spec-icon"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg></span>
+          4G LTE (FDD)
+        </div>
+        <div class="specs-list__val">B1, B2, B4, B5, B7, B12, B17, B28A</div>
+      </div>
+
+      <div class="specs-list__row">
+        <div class="specs-list__key">
+          <span class="spec-icon"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg></span>
+          3G (WCDMA)
+        </div>
+        <div class="specs-list__val">B1, B2, B5</div>
+      </div>
+
+      <div class="specs-list__row">
+        <div class="specs-list__key">
+          <span class="spec-icon"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg></span>
+          2G (GSM)
+        </div>
+        <div class="specs-list__val">B2, B5</div>
+      </div>
+
+      <div class="specs-list__row">
+        <div class="specs-list__key">
+          <span class="spec-icon"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5M4.5 15.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25zm.75-12h9v9h-9v-9z"/></svg></span>
+          Chipset
+        </div>
+        <div class="specs-list__val">ASR3603S Chipset (High-Performance RTOS)</div>
+      </div>
+
+      <div class="specs-list__row">
+        <div class="specs-list__key">
+          <span class="spec-icon"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 2.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125m16.5 5.625c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"/></svg></span>
+          Memory
+        </div>
+        <div class="specs-list__val">16MB Flash + 24MB RAM</div>
+      </div>
+
+      <div class="specs-list__row">
+        <div class="specs-list__key">
+          <span class="spec-icon"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"/></svg></span>
+          Microphone
+        </div>
+        <div class="specs-list__val">3918 Dynamic HR Mic</div>
+      </div>
+
+      <div class="specs-list__row">
+        <div class="specs-list__key">
+          <span class="spec-icon"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.56-.75-1.56-1.65v-5.16c0-.9.68-1.65 1.56-1.65h2.24z"/></svg></span>
+          Speaker
+        </div>
+        <div class="specs-list__val">0916 High-Quality Speaker</div>
+      </div>
+
+      <div class="specs-list__row">
+        <div class="specs-list__key">
+          <span class="spec-icon"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M6 13.5V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m-6-9a1.5 1.5 0 010-3m0 3a1.5 1.5 0 000-3m0-3.75V3m0 3.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 9V10.5"/></svg></span>
+          Platform
+        </div>
+        <div class="specs-list__val">RTOS / ResQHub™ Ready</div>
+      </div>
+
+      <div class="specs-list__row">
+        <div class="specs-list__key">
+          <span class="spec-icon"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M21 10.5h.375a.375.375 0 01.375.375v2.25a.375.375 0 01-.375.375H21M3 8.25h13.5A2.25 2.25 0 0118.75 10.5v3a2.25 2.25 0 01-2.25 2.25H3a2.25 2.25 0 01-2.25-2.25v-3A2.25 2.25 0 013 8.25zM6.75 10.5h3"/></svg></span>
+          Battery
+        </div>
+        <div class="specs-list__val">600mAh Lithium Battery | 48+ Hour Normal Use</div>
+      </div>
+
+      <div class="specs-list__row">
+        <div class="specs-list__key">
+          <span class="spec-icon"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg></span>
+          Charging
+        </div>
+        <div class="specs-list__val">Magnetic 2-pin</div>
+      </div>
+
+      <div class="specs-list__row">
+        <div class="specs-list__key">
+          <span class="spec-icon"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"/></svg></span>
+          Dimensions
+        </div>
+        <div class="specs-list__val">51.5t × 33.2w × 14.3mm</div>
+      </div>
+
+      <div class="specs-list__row">
+        <div class="specs-list__key">
+          <span class="spec-icon"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z"/></svg></span>
+          Weight
+        </div>
+        <div class="specs-list__val">42g (Ultra-Lightweight for Daily Wear)</div>
+      </div>
+
+      <div class="specs-list__row">
+        <div class="specs-list__key">
+          <span class="spec-icon"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg></span>
+          Water Resistance
+        </div>
+        <div class="specs-list__val">IP67 Waterproof & Dust Resistant Rating</div>
+      </div>
+
+      <div class="specs-list__row">
+        <div class="specs-list__key">
+          <span class="spec-icon"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M4.098 19.902a3.75 3.75 0 005.304 0l6.401-6.402M6.75 21A3.75 3.75 0 013 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 003.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008z"/></svg></span>
+          Colors
+        </div>
+        <div class="specs-list__val">Black</div>
+      </div>
+
     </div>
   </div>
 </section>
 
-<!-- Available Devices -->
-<section class="other-devices">
+<!-- ResQHub Callout -->
+<section class="section section--alt">
   <div class="container">
-    <div class="other-devices__header">
-      <h2>Available Now</h2>
-      <p>Explore our current PERS smartwatch lineup, both available today.</p>
-    </div>
-    <div class="other-devices__grid">
-      <a href="200i.html" class="card device-card">
-        <div class="device-card__badge">200i</div>
-        <div class="device-card__content">
-          <h3>SW Series 200i</h3>
-          <p>Slim, Discreet, Built for Comfort</p>
-          <span class="device-card__link">View Full Specs →</span>
-        </div>
-      </a>
-      <a href="200v.html" class="card device-card">
-        <div class="device-card__badge" style="background: var(--navy-mid);">200v</div>
-        <div class="device-card__content">
-          <h3>SW Series 200v</h3>
-          <p>Colorful. Capable. Fully Featured.</p>
-          <span class="device-card__link">View Full Specs →</span>
-        </div>
-      </a>
+    <div class="rq-callout">
+      <div class="rq-callout__copy">
+        <h3>Works Seamlessly with ResQHub™</h3>
+        <p>Every 300v is built for the ResQHub platform — manage your entire fleet, tune device settings, and monitor events from a single dashboard.</p>
+      </div>
+      <a href="../index.html#management-platform" class="btn btn--white" style="background:rgba(255,255,255,.12); color:white; border-color:rgba(255,255,255,.25); flex-shrink:0;">Explore ResQHub →</a>
     </div>
   </div>
 </section>
@@ -230,6 +474,7 @@
     <p class="footer__copy">© 2025 TruAlert Systems. All rights reserved.</p>
   </div>
 </footer>
+
 
 </body>
 </html>
