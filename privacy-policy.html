@@ -227,14 +227,10 @@
         <img src="assets/logo-vector.png" alt="TruAlert Systems">
       </a>
       <div class="nav__links">
-        <div class="nav__dropdown">
-          <a href="/#pers-devices">PERS Devices <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0"><path d="M6 9l6 6 6-6"/></svg></a>
-          <div class="nav__dropdown-menu">
-            <a href="/products/200i">SW Series 200i</a>
-            <a href="/products/300v">SW Series 300v</a>
-            <a href="/products/300i3">SW Series 300i3</a>
-          </div>
-        </div>
+        <!-- 300v / 300i3 hidden from nav 2026-08-17: SKUs paused, pages still live at
+             /products/300v and /products/300i3. Dropdown collapsed to a single link since
+             only the 200i remains. Restore the .nav__dropdown block from git to bring back. -->
+        <a href="/#pers-devices">PERS Devices</a>
         <a href="/management-platform">Management Platform</a>
         <a href="/#partnership-options">Partnership Options</a>
       </div>
