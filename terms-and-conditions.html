@@ -227,11 +227,15 @@
         <img src="assets/logo-vector.png" alt="TruAlert Systems">
       </a>
       <div class="nav__links">
-        <!-- 300v / 300i3 hidden from nav 2026-08-17: SKUs paused, pages still live at
-             /products/300v and /products/300i3. Dropdown collapsed to a single link since
-             only the 200i remains, and PERS Devices now links straight to it.
-             Restore the .nav__dropdown block from git to bring the full lineup back. -->
-        <a href="/products/200i">PERS Devices</a>
+        <!-- PERS Devices dropdown restored 2026-11-18 for the IH Series 100. 300v / 300i3
+             stay paused and unlinked (pages still live at /products/300v and /products/300i3). -->
+        <div class="nav__dropdown">
+          <a href="/#device-portfolio">PERS Devices <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="nav__dropdown-menu">
+            <a href="/products/200i">SW Series 200i</a>
+            <a href="/products/ih100">IH Series 100</a>
+          </div>
+        </div>
         <a href="/management-platform">Management Platform</a>
         <a href="/#partnership-options">Partnership Options</a>
       </div>
@@ -307,7 +311,7 @@
         <img src="assets/logo-white.png" alt="TruAlert Systems">
       </div>
       <nav class="footer__links">
-        <a href="/products/200i">PERS Devices</a>
+        <a href="/#device-portfolio">PERS Devices</a>
         <a href="/management-platform">Management Platform</a>
         <a href="/#partnership-options">Partnership Options</a>
         <a data-tf-popup="pxQWhQMQ" data-tf-size="70">Get A Quote</a>

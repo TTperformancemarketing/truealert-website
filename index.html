@@ -357,29 +357,39 @@
     }
     .product-card__cta:hover { gap: 8px; color: var(--navy); }
 
-    /* ── Single-device banner (used while 300v/300i3 are hidden) ─── */
-    .product-banner {
+    /* ── Device grid (SW 200i + IH 100) ─────────── */
+    .device-grid {
       display: grid;
-      grid-template-columns: 400px 1fr;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .device-card {
+      display: flex;
+      flex-direction: column;
       background: #F4F5F6;
       border-radius: var(--radius);
       overflow: hidden;
     }
-    .product-banner__img {
+    .device-card__img {
       background: #fff;
+      aspect-ratio: 4/3;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 32px;
     }
-    .product-banner__img img {
+    .device-card__img img {
       width: 100%;
-      max-height: 280px;
+      height: 100%;
       object-fit: contain;
       display: block;
     }
-    .product-banner__body { padding: 44px 48px; }
-    .product-banner__eyebrow {
+    .device-card__body {
+      padding: 32px 32px 36px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .device-card__eyebrow {
       font-size: 12px;
       font-weight: 700;
       letter-spacing: .1em;
@@ -388,54 +398,54 @@
       margin-bottom: 10px;
     }
     /* scoped past `.section--navy h3 { color: white }` — this card sits light-on-navy */
-    .section--navy .product-banner__title {
-      font-size: 26px;
+    .section--navy .device-card__title {
+      font-size: 24px;
       font-weight: 800;
       color: var(--navy);
       margin-bottom: 12px;
     }
-    .product-banner__desc {
+    .device-card__desc {
       font-size: 15px;
       color: var(--muted);
       line-height: 1.65;
-      margin-bottom: 24px;
-      max-width: 60ch;
+      margin-bottom: 22px;
     }
-    .product-banner__features {
+    .device-card__features {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 24px;
+      gap: 6px;
+      margin-bottom: 22px;
     }
-    .product-banner__feature {
+    .device-card__feature {
       display: inline-flex;
       align-items: center;
       gap: 7px;
-      background: var(--navy-tint);
+      background: var(--white);
+      border: 1px solid #D1E9FF;
       color: var(--navy);
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 600;
-      padding: 8px 14px;
+      padding: 6px 11px;
       border-radius: 100px;
     }
-    .product-banner__meta {
-      display: flex;
-      gap: 40px;
-      flex-wrap: wrap;
-      padding: 16px 0;
+    .device-card__meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      padding: 14px 0;
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      margin-bottom: 26px;
+      margin: auto 0 24px;
       font-size: 13px;
     }
-    .product-banner__meta-label {
+    .device-card__meta-label {
       display: block;
       font-weight: 600;
       color: var(--navy);
       margin-bottom: 2px;
     }
-    .product-banner__meta-value { display: block; color: var(--muted); }
-    .product-banner__actions {
+    .device-card__meta-value { display: block; color: var(--muted); }
+    .device-card__actions {
       display: flex;
       gap: 20px;
       align-items: center;
@@ -701,12 +711,16 @@
       .benefits__grid { grid-template-columns: 1fr; }
       .rqhub-split { grid-template-columns: 1fr; gap: 40px; }
       .rqhub-image { order: -1; }
-      .product-banner { grid-template-columns: 1fr; }
-      .product-banner__body { padding: 32px 28px; }
+      .device-grid { grid-template-columns: 1fr; }
+      .partnership__tiers { grid-template-columns: 1fr; }
       .footer__top { grid-template-columns: 1fr; text-align: center; gap: 24px; }
     }
     @media (max-width: 680px) {
       .products__grid { grid-template-columns: 1fr; }
+      .device-card__body { padding: 28px 24px 32px; }
+      .quote__inner > * { min-width: 0; }
+      .quote__card { padding: 32px 20px; }
+      .quote__card-email { font-size: 17px; overflow-wrap: anywhere; }
       .nav__links { display: none; }
       .section { padding: 60px 0; }
       .partnership__points { gap: 24px; }
@@ -723,11 +737,15 @@
         <img src="assets/logo-vector.png" alt="TruAlert Systems">
       </a>
       <div class="nav__links">
-        <!-- 300v / 300i3 hidden from nav 2026-08-17: SKUs paused, pages still live at
-             /products/300v and /products/300i3. Dropdown collapsed to a single link since
-             only the 200i remains, and PERS Devices now links straight to it.
-             Restore the .nav__dropdown block from git to bring the full lineup back. -->
-        <a href="/products/200i">PERS Devices</a>
+        <!-- PERS Devices dropdown restored 2026-11-18 for the IH Series 100. 300v / 300i3
+             stay paused and unlinked (pages still live at /products/300v and /products/300i3). -->
+        <div class="nav__dropdown">
+          <a href="/#device-portfolio">PERS Devices <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="nav__dropdown-menu">
+            <a href="/products/200i">SW Series 200i</a>
+            <a href="/products/ih100">IH Series 100</a>
+          </div>
+        </div>
         <a href="/management-platform">Management Platform</a>
         <a href="#partnership-options">Partnership Options</a>
       </div>
@@ -791,7 +809,7 @@
           <ul class="check-list">
             <li><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#EFF6FF"/><path d="M5 9l3 3 5-5" stroke="#003D5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Competitively priced entry-level hardware</li>
             <li><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#EFF6FF"/><path d="M5 9l3 3 5-5" stroke="#003D5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Reduced support costs thanks to a reliable platform</li>
-            <li><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#EFF6FF"/><path d="M5 9l3 3 5-5" stroke="#003D5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Higher customer retention by offering the perfect watch for each user</li>
+            <li><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#EFF6FF"/><path d="M5 9l3 3 5-5" stroke="#003D5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Higher customer retention by offering the right device for each user</li>
           </ul>
         </div>
       </div>
@@ -832,11 +850,11 @@
         </div>
         <div class="benefit-card__body">
           <h3>Superior, Purpose-Built Tech</h3>
-          <p>Offer a portfolio of reliable smartwatches designed to meet any customer need — from rugged workhorses to slim, feature-rich premium models, all on a trusted RTOS platform.</p>
+          <p>Offer reliable devices for every kind of customer — a 2-in-1 smartwatch for the ones on the move, and a wall-mounted in-home system for the ones who stay close to home.</p>
           <ul class="check-list">
-            <li><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#EFF6FF"/><path d="M5 9l3 3 5-5" stroke="#003D5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>A diverse portfolio to match any customer need (value, comfort, features, connectivity)</li>
+            <li><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#EFF6FF"/><path d="M5 9l3 3 5-5" stroke="#003D5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Protection on the go and at home, from one supplier</li>
             <li><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#EFF6FF"/><path d="M5 9l3 3 5-5" stroke="#003D5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Modern, attractive designs that drive end-user adoption and satisfaction</li>
-            <li><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#EFF6FF"/><path d="M5 9l3 3 5-5" stroke="#003D5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Stable RTOS platform across all models for consistent, reliable performance</li>
+            <li><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#EFF6FF"/><path d="M5 9l3 3 5-5" stroke="#003D5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Every device managed in ResQHub™ for consistent, reliable performance</li>
           </ul>
         </div>
       </div>
@@ -849,46 +867,78 @@
 <section class="section section--navy" id="device-portfolio">
   <div class="container">
     <div class="section-header">
-      <span class="label">PERS Device</span>
-      <h2>One Device, Worn Two Ways</h2>
-      <p>The SW 200i works as a smartwatch or as a discreet lanyard pendant. One SKU to stock and train on, and it fits the customers who will wear a watch as well as the ones who never will.</p>
+      <span class="label">PERS Devices</span>
+      <h2>Two Devices. Every Customer Covered.</h2>
+      <p>The SW 200i protects customers wherever they go, on the wrist or around the neck. The IH 100 in-home system covers the ones who spend most of their day at home. Both run on ResQHub™, so your whole fleet lives in one portal.</p>
     </div>
 
-    <div class="product-banner">
-      <div class="product-banner__img">
-        <img src="assets/product/200i angled display white.jpeg" alt="TruAlert SW Series 200i">
-      </div>
-      <div class="product-banner__body">
-        <p class="product-banner__eyebrow">TruAlert SW 200i</p>
-        <h3 class="product-banner__title">Versatile 2-in-1 Design</h3>
-        <p class="product-banner__desc">A dual-wear safety system that transitions seamlessly from a smartwatch to a discreet lanyard pendant, so protection stays constant whether it is worn on the wrist or around the neck.</p>
-        <div class="product-banner__features">
-          <span class="product-banner__feature"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>SOS Alarm</span>
-          <span class="product-banner__feature"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Fall Detection</span>
-          <span class="product-banner__feature"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>GPS Locating</span>
-          <span class="product-banner__feature"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>2-Way Voice</span>
+    <div class="device-grid">
+
+      <div class="device-card">
+        <div class="device-card__img">
+          <img src="assets/product/200i angled display white.jpeg" alt="TruAlert SW Series 200i">
         </div>
-        <div class="product-banner__meta">
-          <div>
-            <span class="product-banner__meta-label">Dimensions</span>
-            <span class="product-banner__meta-value">49.7t × 41w × 14.1mm</span>
+        <div class="device-card__body">
+          <p class="device-card__eyebrow">TruAlert SW 200i</p>
+          <h3 class="device-card__title">Versatile 2-in-1 Design</h3>
+          <p class="device-card__desc">A dual-wear safety system that switches from a smartwatch to a discreet lanyard pendant, so protection stays on whether it's worn on the wrist or around the neck.</p>
+          <div class="device-card__features">
+            <span class="device-card__feature"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>SOS Alarm</span>
+            <span class="device-card__feature"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Fall Detection</span>
+            <span class="device-card__feature"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>GPS Locating</span>
           </div>
-          <div>
-            <span class="product-banner__meta-label">Unit Weight</span>
-            <span class="product-banner__meta-value">50.60 g</span>
+          <div class="device-card__meta">
+            <div>
+              <span class="device-card__meta-label">Dimensions</span>
+              <span class="device-card__meta-value">49.7t × 41w × 14.1mm</span>
+            </div>
+            <div>
+              <span class="device-card__meta-label">Unit Weight</span>
+              <span class="device-card__meta-value">50.60 g</span>
+            </div>
+          </div>
+          <div class="device-card__actions">
+            <a data-tf-popup="pxQWhQMQ" data-tf-size="70" class="btn btn--primary">Get A Quote</a>
+            <a href="/products/200i" class="product-card__cta">View Full Specs →</a>
           </div>
         </div>
-        <div class="product-banner__actions">
-          <a data-tf-popup="pxQWhQMQ" data-tf-size="70" class="btn btn--primary">Get A Quote</a>
-          <a href="/products/200i" class="product-card__cta">View Full Specs →</a>
+      </div>
+
+      <div class="device-card">
+        <div class="device-card__img">
+          <img src="assets/product/ih100-home.jpeg" alt="TruAlert IH 100 base station with pendant and wristband help buttons">
+        </div>
+        <div class="device-card__body">
+          <p class="device-card__eyebrow">TruAlert IH 100</p>
+          <h3 class="device-card__title">Three Ways to Call for Help</h3>
+          <p class="device-card__desc">A wall-mounted 4G base station with a water-resistant help button, worn as a pendant or wristband. Customers can press their help button or the base station’s help button, or pull the help cord.</p>
+          <div class="device-card__features">
+            <span class="device-card__feature"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Pendant or Wristband</span>
+            <span class="device-card__feature"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Base Station Button</span>
+            <span class="device-card__feature"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Pull Cord</span>
+          </div>
+          <div class="device-card__meta">
+            <div>
+              <span class="device-card__meta-label">Help Button Range</span>
+              <span class="device-card__meta-value">Up to 50m</span>
+            </div>
+            <div>
+              <span class="device-card__meta-label">Backup Battery</span>
+              <span class="device-card__meta-value">Up to 5 hours</span>
+            </div>
+          </div>
+          <div class="device-card__actions">
+            <a data-tf-popup="pxQWhQMQ" data-tf-size="70" class="btn btn--primary">Get A Quote</a>
+            <a href="/products/ih100" class="product-card__cta">View Full Specs →</a>
+          </div>
         </div>
       </div>
+
     </div>
 
-    <!-- HIDDEN 2026-08-17: 300v + 300i3 paused, so the 3-card grid is commented out and the 200i
-         runs as a single horizontal banner above. Both product pages are still live and reachable
-         at /products/300v and /products/300i3 (just unlinked from nav). To restore the full lineup,
-         delete this comment wrapper and the .product-banner block above.
+    <!-- HIDDEN 2026-08-17: 300v + 300i3 paused. Their old 3-card grid is kept below for reference;
+         the live section is the two-card .device-grid above (SW 200i + IH 100, added 2026-11-18). Both
+         300-series pages are still live at /products/300v and /products/300i3, just unlinked.
     <div class="products__grid">
 
       <div class="card product-card">
@@ -1052,11 +1102,11 @@
       <div class="tier-card">
         <p class="tier-card__label">Tier 01</p>
         <h3 class="tier-card__name">Hardware Foundation</h3>
-        <p class="tier-card__desc">Get our industry-leading smartwatches and use your own existing systems. Perfect for established dealers who want superior hardware while maintaining their current SIM, monitoring, and support setup.</p>
+        <p class="tier-card__desc">Get our industry-leading PERS devices and use your own existing systems. Perfect for established dealers who want superior hardware while maintaining their current SIM, monitoring, and support setup.</p>
         <div class="tier-card__includes">
           <p class="tier-card__includes-label">Includes</p>
           <ul>
-            <li>TruAlert Smartwatches</li>
+            <li>TruAlert PERS Devices</li>
             <li>Basic ResQHub™ Provisioning</li>
           </ul>
         </div>
@@ -1069,7 +1119,7 @@
         <div class="tier-card__includes">
           <p class="tier-card__includes-label">Includes</p>
           <ul>
-            <li>TruAlert Smartwatches</li>
+            <li>TruAlert PERS Devices</li>
             <li><strong>Full ResQHub™ Platform Access</strong></li>
           </ul>
         </div>
@@ -1082,7 +1132,7 @@
         <div class="tier-card__includes">
           <p class="tier-card__includes-label">Includes</p>
           <ul>
-            <li>TruAlert Smartwatches</li>
+            <li>TruAlert PERS Devices</li>
             <li><strong>Full ResQHub™ Platform Access</strong></li>
             <li><strong>Managed SIM Connectivity</strong></li>
             <li><strong>Preferred Monitoring Integration</strong></li>
@@ -1128,7 +1178,7 @@
         <img src="assets/logo-white.png" alt="TruAlert Systems">
       </div>
       <nav class="footer__links">
-        <a href="/products/200i">PERS Devices</a>
+        <a href="/#device-portfolio">PERS Devices</a>
         <a href="/management-platform">Management Platform</a>
         <a href="#partnership-options">Partnership Options</a>
         <a data-tf-popup="pxQWhQMQ" data-tf-size="70">Get A Quote</a>
